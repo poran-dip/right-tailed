@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ArrowDown, Search, X } from 'lucide-react';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { departments, entranceExams } from '@/lib/data';
 
 export type ExamSelectorHandle = {
   focus: () => void;
@@ -28,31 +29,12 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     },
   }));
 
-  const colleges = [
-    { id: 'assam-engineering-college', name: 'Assam Engineering College' },
-    { id: 'iit-bombay', name: 'IIT Bombay' },
-    { id: 'iit-delhi', name: 'IIT Delhi' },
-    { id: 'iit-madras', name: 'IIT Madras' },
-    { id: 'iit-kanpur', name: 'IIT Kanpur' },
-    { id: 'iit-kharagpur', name: 'IIT Kharagpur' },
-    { id: 'iit-roorkee', name: 'IIT Roorkee' },
-    { id: 'iit-guwahati', name: 'IIT Guwahati' },
-    { id: 'nit-trichy', name: 'NIT Trichy' },
-    { id: 'nit-warangal', name: 'NIT Warangal' },
-  ];
-
-  const entranceExams = [
-    { id: 'jee-mains', name: 'JEE Mains' },
-    { id: 'jee-advanced', name: 'JEE Advanced' },
-    { id: 'neet-ug', name: 'NEET UG' },
-    { id: 'gate', name: 'GATE' },
-    { id: 'cat', name: 'CAT' },
-    { id: 'upsc-cse', name: 'UPSC CSE' },
-  ];
-
   const filteredItems = examType === 'regular'
-    ? colleges.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    : entranceExams.filter(e => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  ? departments.filter(d => 
+      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      d.category.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : entranceExams.filter(e => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const canProceed = searchQuery.trim().length > 0;
 
@@ -63,7 +45,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     if (!selectedItem) return;
 
     if (examType === 'regular') {
-      window.location.href = `/college/${selectedItem.id}`;
+      window.location.href = `/department/${selectedItem.id}`;
     } else {
       window.location.href = `/entrance/${selectedItem.id}`;
     }
@@ -141,7 +123,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             }}
             onFocus={() => setShowDropdown(searchQuery.length > 0)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-            placeholder={examType === 'regular' ? 'Search for your college...' : 'Search for entrance exam...'}
+            placeholder={examType === 'regular' ? 'Search for your department/program...' : 'Search for entrance exam...'}
             className="w-full pl-10 md:pl-12 pr-5 py-3 md:py-4 rounded-xl border-2 border-blue-200 dark:border-blue-900/50 bg-white dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
           />
 
@@ -157,6 +139,9 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                   className="w-full px-5 py-3 text-left hover:bg-blue-50 dark:hover:bg-gray-700/50 transition-colors border-b border-blue-50 dark:border-gray-700 last:border-b-0 first:rounded-t-xl last:rounded-b-xl"
                 >
                   <div className="font-medium text-gray-900 dark:text-gray-100">{item.name}</div>
+                  {'category' in item && (
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{item.category}</div>
+                  )}
                 </button>
               ))}
             </div>
