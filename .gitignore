@@ -1,0 +1,19 @@
+# node.js deps and logs
+node_modules
+npm-debug.log*
+
+# nextjs outputs
+.next
+out
+
+# env variables
+.env*
+!.env.example
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
