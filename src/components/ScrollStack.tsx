@@ -17,7 +17,7 @@ export const ScrollStackItem = ({
 }: ScrollStackItemProps) => {
     return (
         <div
-            className={`scroll-stack-card relative w-full my-10 p-12 rounded-3xl bg-white shadow-lg will-change-transform ${itemClassName}`}
+            className={`scroll-stack-card relative w-full my-10 p-12 rounded-3xl bg-white dark:bg-slate-800 shadow-lg will-change-transform ${itemClassName}`}
             style={{
                 transformStyle: "preserve-3d",
                 backfaceVisibility: "hidden"

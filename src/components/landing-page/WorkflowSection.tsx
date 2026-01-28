@@ -30,7 +30,7 @@ const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
   ]
 
   return (
-    <section id="process" className="bg-purple-600 py-24 px-6">
+    <section id="process" className="bg-purple-600 dark:bg-slate-900 py-15 px-6">
       <div className="max-w-5xl mx-auto text-center mb-20">
         <h2 className="text-4xl font-bold text-white mb-4">
           How RightTailed Works
@@ -50,11 +50,11 @@ const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
                   <div className="w-14 h-14 rounded-xl bg-purple-600/10 flex items-center justify-center">
                     <Icon className="w-7 h-7 text-purple-600" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">
+                  <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">
                     {step.title}
                   </h3>
                 </div>
-                <p className="text-slate-600">{step.desc}</p>
+                <p className="text-slate-600 dark:text-white/60">{step.desc}</p>
               </ScrollStackItem>
             )
           })}
@@ -64,7 +64,7 @@ const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
       <div className="mt-24 flex justify-center">
         <button
           onClick={onPrimaryCTA}
-          className="px-8 py-4 bg-white text-purple-600 rounded-xl cursor-pointer font-semibold text-lg hover:bg-purple-50 transition"
+          className="px-12 py-3 bg-white dark:bg-slate-800 text-purple-600 dark:hover:bg-slate-700 dark:text-white rounded-xl cursor-pointer font-semibold text-lg hover:bg-purple-50 transition"
         >
           Start Your Journey
         </button>

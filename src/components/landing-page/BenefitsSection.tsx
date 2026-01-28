@@ -6,52 +6,71 @@ interface BenefitsSectionProps {
 
 const BenefitsSection = ({ onPrimaryCTA }: BenefitsSectionProps) => {
   return (
-    <section id="benefits" className="py-20 px-6 bg-linear-to-b from-blue-100/80 to-indigo-100/80 dark:from-blue-900/20 dark:to-indigo-900/20">
+    <section id="benefits" className="py-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">Why Students Love RightTailed</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Join thousands of students who transformed their exam preparation</p>
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+            Why Students Choose <span className='text-purple-600'>RightTailed</span>
+          </h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Clear direction, less guesswork, and better outcomes.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center p-8">
-            <div className="mb-4 flex justify-center">
-              <div className="p-4 bg-blue-200 dark:bg-blue-900/30 rounded-2xl">
-                <Clock className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <div className="flex items-center justify-center gap-5 my-10">
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+            <div className="mb-5 flex justify-center">
+              <div className="p-4 rounded-2xl bg-purple-600/10">
+                <Clock className="w-8 h-8 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-3">Save 10+ Hours Weekly</h3>
-            <p className="text-gray-600 dark:text-gray-400">Stop wasting time on low-weightage topics. Focus on what matters.</p>
+            <h3 className="text-xl font-semibold mb-3 text-slate-900 dark:text-white">
+              Save 10+ Hours Weekly
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400">
+              Stop spending time on low-impact topics. Focus only on what moves the needle.
+            </p>
           </div>
-          <div className="text-center p-8">
-            <div className="mb-4 flex justify-center">
-              <div className="p-4 bg-purple-200 dark:bg-purple-900/30 rounded-2xl">
-                <TrendingUp className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+            <div className="mb-5 flex justify-center">
+              <div className="p-4 rounded-2xl bg-purple-600/10">
+                <TrendingUp className="w-8 h-8 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-3">Boost Scores by 30%</h3>
-            <p className="text-gray-600 dark:text-gray-400">Data-driven preparation leads to measurably better results.</p>
+            <h3 className="text-xl font-semibold mb-3 text-slate-900 dark:text-white">
+              Measurable Score Improvement
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400">
+              Data-backed preparation leads to consistent performance gains.
+            </p>
           </div>
-          <div className="text-center p-8">
-            <div className="mb-4 flex justify-center">
-              <div className="p-4 bg-indigo-200 dark:bg-indigo-900/30 rounded-2xl">
-                <Heart className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+            <div className="mb-5 flex justify-center">
+              <div className="p-4 rounded-2xl bg-purple-600/10">
+                <Heart className="w-8 h-8 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-3">Reduce Exam Anxiety</h3>
-            <p className="text-gray-600 dark:text-gray-400">Know exactly what to expect. Walk into exams with confidence.</p>
+            <h3 className="text-xl font-semibold mb-3 text-slate-900 dark:text-white">
+              Lower Exam Stress
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400">
+              When expectations are clear, confidence follows naturally.
+            </p>
           </div>
         </div>
-
-        <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-2xl p-10 border border-blue-200 dark:border-blue-800">
+        <div className="border border-slate-200 dark:border-slate-800 p-10 bg-slate-50 dark:bg-slate-900">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">Ready to Ace Your Next Exam?</h3>
-            <p className="text-lg mb-6 text-gray-600 dark:text-gray-400">Join students who are already studying smarter, not harder</p>
-            <button 
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-slate-900 dark:text-white">
+              Ready to Prepare Smarter?
+            </h3>
+            <p className="text-lg mb-6 text-slate-600 dark:text-slate-400">
+              Build clarity, consistency, and confidence for your next exam.
+            </p>
+            <button
               onClick={onPrimaryCTA}
-              className="px-10 py-4 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all cursor-pointer"
+              className="px-12 py-2 cursor-pointer bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold text-lg transition-all"
             >
-              Start Crushing Exams Now
+              Get Started
             </button>
           </div>
         </div>
