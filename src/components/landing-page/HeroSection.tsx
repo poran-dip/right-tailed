@@ -31,7 +31,7 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
           </div>
 
           <div className='mt-8 mb-10'>
-            <ExamSelector/>
+            <ExamSelector ref={examSelectorRef} />
           </div>
 
           <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500">
