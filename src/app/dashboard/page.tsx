@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react'
 import { course, paper } from '@/lib/types'
 import { Menu, BookOpen } from 'lucide-react'
 import gsap from 'gsap'
-import Navbar from '../../components/LeftNav'
 import Home from '../../components/dashboard-home'
 
 const DashboardPage = () => {
@@ -93,13 +92,6 @@ const DashboardPage = () => {
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-indigo-400/5 dark:bg-indigo-400/10 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
       </div>
 
-      {/* Navbar Component */}
-      <Navbar
-        isOpen={sidebarOpen}
-        onClose={closeSidebar}
-        activeNav={activeNav}
-        setActiveNav={setActiveNav}
-      />
 
       {/* Main Content */}
       <div className="flex-1 min-w-0 overflow-x-hidden">
