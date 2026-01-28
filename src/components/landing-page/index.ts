@@ -1,6 +1,6 @@
 export { default as Navbar } from "./Navbar";
 export { default as Footer } from "./Footer";
-export { default as SignInDialog } from "./SignInDialog";
+export { default as SignInDialog } from "../SignInDialog";
 export { default as MobileMenu } from "./MobileMenu";
 export { default as ExamSelector } from "./ExamSelector";
 export { default as HeroSection } from "./HeroSection";

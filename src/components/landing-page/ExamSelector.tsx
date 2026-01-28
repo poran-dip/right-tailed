@@ -57,7 +57,6 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     <div className="w-full max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-900/30 rounded-3xl p-4 shadow-sm shadow-purple-600/10">
 
-        {/* Toggle */}
         <div className="flex mb-5 rounded-2xl border border-purple-200 dark:border-gray-700 overflow-hidden">
           {(['regular', 'entrance'] as const).map(type => (
             <button
@@ -78,7 +77,6 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
           ))}
         </div>
 
-        {/* Focus hint */}
         {showFocusIndicator && (
           <div className="hidden lg:block fixed top-28 left-1/2 -translate-x-1/2 z-50">
             <div className="relative bg-purple-600 rounded-2xl px-4 py-3 shadow-2xl animate-in fade-in slide-in-from-top-5 duration-500">
@@ -105,7 +103,6 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
           </div>
         )}
 
-        {/* Search */}
         <div className="relative mb-5">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-600" />
           <input
@@ -156,7 +153,6 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
           )}
         </div>
 
-        {/* CTA */}
         <button
           onClick={handleProceed}
           disabled={!canProceed}
