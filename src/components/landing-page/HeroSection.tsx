@@ -16,8 +16,8 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
   }));
 
   return (
-    <div className="min-h-screen flex">
-      <div className="box w-[90%] md:w-[50%] px-10 pt-15">
+    <div className="min-h-screen flex flex-col-reverse md:flex-row">
+      <div className="box w-full md:w-[50%] px-5 md:px-10 md:pt-15 pb-5 md:pb-0">
         <div>
             <h1 className="text-3xl md:text-5xl mt-10 font-bold text-gray-900 dark:text-gray-50 leading-[1.1] tracking-tight">
               Exams <span className='text-purple-600'>aren't random!</span>
@@ -39,7 +39,7 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
             <span>Built from real university PYQs, not guesswork</span>
           </div>
       </div>
-      <div className="box w-[90%] md:w-[50%] bg-purple-500 dark:bg-slate-900 dark:border-l dark:border-white/20">
+      <div className="box w-full md:w-[50%] bg-purple-500 dark:bg-slate-900 dark:border-l dark:border-white/20">
         <img src="/hero.png" alt="" className='h-full w-full object-cover object-top'/>
       </div>
     </div>
