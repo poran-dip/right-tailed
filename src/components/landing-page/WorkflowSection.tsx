@@ -64,7 +64,7 @@ const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
       <div className="mt-24 flex justify-center">
         <button
           onClick={onPrimaryCTA}
-          className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition"
+          className="px-8 py-4 bg-white text-purple-600 rounded-xl cursor-pointer font-semibold text-lg hover:bg-purple-50 transition"
         >
           Start Your Journey
         </button>

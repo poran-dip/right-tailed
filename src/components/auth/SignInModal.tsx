@@ -28,7 +28,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
 
       <div className="relative w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
         <button onClick={onClose} className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <X className="w-5 h-5 text-gray-500 dark:text-gray-400 cursor-pointer" />
         </button>
 
         <div className="p-8">
