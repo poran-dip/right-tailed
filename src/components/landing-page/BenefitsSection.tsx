@@ -58,7 +58,7 @@ const BenefitsSection = ({ onPrimaryCTA }: BenefitsSectionProps) => {
             </p>
           </div>
         </div>
-        <div className="border border-slate-200 dark:border-slate-800 p-10 bg-slate-50 dark:bg-slate-900">
+        <div className="border border-slate-200 dark:border-0 p-10 bg-slate-50 dark:bg-slate-950">
           <div className="text-center max-w-2xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold mb-3 text-slate-900 dark:text-white">
               Ready to Prepare Smarter?
