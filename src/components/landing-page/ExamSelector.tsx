@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import { ArrowRight, Search, X } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowDown, Search, X } from 'lucide-react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { departments, entranceExams } from '@/lib/data';
 
 export type ExamSelectorHandle = {
   focus: () => void;
@@ -29,47 +31,26 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     },
   }));
 
-  const colleges = [
-    { id: 'assam-engineering-college', name: 'Assam Engineering College' },
-    { id: 'iit-bombay', name: 'IIT Bombay' },
-    { id: 'iit-delhi', name: 'IIT Delhi' },
-    { id: 'iit-madras', name: 'IIT Madras' },
-    { id: 'iit-kanpur', name: 'IIT Kanpur' },
-    { id: 'iit-kharagpur', name: 'IIT Kharagpur' },
-    { id: 'iit-roorkee', name: 'IIT Roorkee' },
-    { id: 'iit-guwahati', name: 'IIT Guwahati' },
-    { id: 'nit-trichy', name: 'NIT Trichy' },
-    { id: 'nit-warangal', name: 'NIT Warangal' },
-  ];
-
-  const entranceExams = [
-    { id: 'jee-mains', name: 'JEE Mains' },
-    { id: 'jee-advanced', name: 'JEE Advanced' },
-    { id: 'neet-ug', name: 'NEET UG' },
-    { id: 'gate', name: 'GATE' },
-    { id: 'cat', name: 'CAT' },
-    { id: 'upsc-cse', name: 'UPSC CSE' },
-  ];
-
-  const filteredItems =
-    examType === 'regular'
-      ? colleges.filter(c =>
-          c.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      : entranceExams.filter(e =>
-          e.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+  const filteredItems = examType === 'regular'
+  ? departments.filter(d => 
+      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      d.category.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : entranceExams.filter(e => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const canProceed = searchQuery.trim().length > 0;
 
   const handleProceed = () => {
-    if (!canProceed || !filteredItems[0]) return;
+    if (!canProceed) return;
+    
+    const selectedItem = filteredItems[0];
+    if (!selectedItem) return;
 
-    const selected = filteredItems[0];
-    window.location.href =
-      examType === 'regular'
-        ? `/college/${selected.id}`
-        : `/entrance/${selected.id}`;
+    if (examType === 'regular') {
+      window.location.href = `/department/${selectedItem.id}`;
+    } else {
+      window.location.href = `/entrance/${selectedItem.id}`;
+    }
   };
 
   return (
@@ -131,12 +112,8 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             }}
             onFocus={() => setShowDropdown(searchQuery.length > 0)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-            placeholder={
-              examType === 'regular'
-                ? 'Search for your college...'
-                : 'Search for entrance exam...'
-            }
-            className="w-full pl-12 pr-4 py-4 rounded-xl border border-purple-700/10 dark:border-purple-900/50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 outline-0 bg-black/3 transition-all"
+            placeholder={examType === 'regular' ? 'Search for your department/program...' : 'Search for entrance exam...'}
+            className="w-full pl-10 md:pl-12 pr-5 py-3 md:py-4 rounded-xl border-2 border-blue-200 dark:border-blue-900/50 bg-white dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
           />
           {showDropdown && filteredItems.length > 0 && (
             <div className="absolute z-10 w-full mt-2 bg-white dark:bg-gray-800 border border-purple-100 dark:border-gray-700 rounded-xl shadow-xl max-h-72 overflow-y-auto">
@@ -149,9 +126,10 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                   }}
                   className="w-full px-5 py-3 text-left hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b last:border-b-0"
                 >
-                  <span className="text-gray-900 dark:text-gray-100 font-medium">
-                    {item.name}
-                  </span>
+                  <div className="font-medium text-gray-900 dark:text-gray-100">{item.name}</div>
+                  {'category' in item && (
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{item.category}</div>
+                  )}
                 </button>
               ))}
             </div>
