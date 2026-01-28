@@ -46,7 +46,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
               <label className="block text-sm font-medium mb-2">
                 Email
@@ -86,7 +86,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
               </span>
             </p>
 
-            <button className="w-full py-3 mt-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all">
+            <button className="w-full py-3 mt-4 cursor-pointer bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all">
               Sign In
             </button>
           </div>
