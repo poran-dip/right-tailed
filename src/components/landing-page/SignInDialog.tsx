@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Mail, Lock, Github, Chrome } from 'lucide-react';
 
 interface SignInDialogProps {
@@ -12,9 +12,18 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
 
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
@@ -24,7 +33,7 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-10"
         >
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <X className="w-5 h-5 text-gray-500 dark:text-gray-400 cursor-pointer" />
         </button>
 
         <div className="p-8">
@@ -33,10 +42,13 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
               {isSignUp ? 'Create Account' : 'Welcome Back'}
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              {isSignUp ? 'Start your journey to exam success' : 'Sign in to continue your preparation'}
+              {isSignUp
+                ? 'Start your journey to exam success'
+                : 'Sign in to continue your preparation'}
             </p>
           </div>
 
+          {/* OAuth buttons */}
           <div className="space-y-3 mb-6">
             <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold">
               <Chrome className="w-5 h-5" />
@@ -48,15 +60,19 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
             </button>
           </div>
 
+          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200 dark:border-gray-700" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white dark:bg-gray-900 text-gray-500">Or continue with email</span>
+              <span className="px-4 bg-white dark:bg-gray-900 text-gray-500">
+                Or continue with email
+              </span>
             </div>
           </div>
 
+          {/* Form */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
@@ -67,9 +83,8 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none transition-colors"
+                  onChange={e => setEmail(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-blue-500 focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -83,25 +98,13 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
                 <input
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none transition-colors"
+                  onChange={e => setPassword(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-blue-500 focus:outline-none transition-colors"
                 />
               </div>
             </div>
 
-            {!isSignUp && (
-              <div className="text-right">
-                <button type="button" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
-                  Forgot password?
-                </button>
-              </div>
-            )}
-
-            <button
-              onClick={() => {/* Handle sign in/up */}}
-              className="w-full py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all"
-            >
+            <button className="w-full py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all">
               {isSignUp ? 'Create Account' : 'Sign In'}
             </button>
           </div>
