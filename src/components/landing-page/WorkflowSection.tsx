@@ -1,95 +1,73 @@
-import { Brain, ClipboardCheck, Sparkles, TrendingUp, Upload } from "lucide-react"
+import { Brain, ClipboardCheck, TrendingUp, Upload } from "lucide-react"
+import ScrollStack, { ScrollStackItem } from "../ScrollStack"
 
 interface WorkflowSectionProps {
   onPrimaryCTA: () => void
 }
 
-
 const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
   const steps = [
-    { 
-      step: "01", 
-      title: "Browse or Contribute PYQs", 
-      desc: "Search through our databases of hundreds of institutes and exams or upload PYQs from your college or exam", 
-      icon: Upload,
-      gradient: "from-blue-500 to-cyan-500"
+    {
+      title: "Browse or Contribute PYQs",
+      desc: "Explore and upload previous year questions.",
+      icon: Upload
     },
-    { 
-      step: "02", 
-      title: "AI Analysis", 
-      desc: "Our AI extracts questions, identifies topics, and creates heatmaps", 
-      icon: Brain,
-      gradient: "from-purple-500 to-pink-500"
+    {
+      title: "Question Analysis",
+      desc: "Questions are structured and analyzed by topic.",
+      icon: Brain
     },
-    { 
-      step: "03", 
-      title: "Take Mock Tests", 
-      desc: "Practice with AI-generated tests based on real patterns", 
-      icon: ClipboardCheck,
-      gradient: "from-orange-500 to-red-500"
+    {
+      title: "Practice with Mock Tests",
+      desc: "Train using real exam patterns.",
+      icon: ClipboardCheck
     },
-    { 
-      step: "04", 
-      title: "Get Smarter", 
-      desc: "Review AI-graded results and follow your personalized study plan", 
-      icon: TrendingUp,
-      gradient: "from-green-500 to-emerald-500"
+    {
+      title: "Track and Improve",
+      desc: "Measure progress and refine strategy.",
+      icon: TrendingUp
     }
   ]
 
-
   return (
-    <section id="process" className="py-20 px-6 bg-linear-to-b from-gray-300/80 to-slate-50/80 dark:from-gray-700/80 dark:to-slate-900/80">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">How RightTailed Works</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Your path to exam success in 4 simple steps</p>
-        </div>
+    <section id="process" className="bg-purple-600 py-24 px-6">
+      <div className="max-w-5xl mx-auto text-center mb-20">
+        <h2 className="text-4xl font-bold text-white mb-4">
+          How RightTailed Works
+        </h2>
+        <p className="text-purple-100">
+          A focused workflow built for real exam prep.
+        </p>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
-          {steps.map((item, i) => {
-            const Icon = item.icon
+      <div className="max-w-4xl mx-auto">
+        <ScrollStack>
+          {steps.map((step, i) => {
+            const Icon = step.icon
             return (
-              <div 
-                key={i} 
-                className="group relative bg-white dark:bg-gray-800 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-transparent hover:scale-105"
-              >
-                {/* Gradient border on hover */}
-                <div className={`absolute inset-0 rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl`}></div>
-                
-                {/* Step number badge */}
-                <div className="flex items-start justify-between mb-4 md:mb-6">
-                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-linear-to-br ${item.gradient} flex items-center justify-center shadow-lg`}>
-                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+              <ScrollStackItem key={i}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-purple-600/10 flex items-center justify-center">
+                    <Icon className="w-7 h-7 text-purple-600" />
                   </div>
-                  <span className="text-xs md:text-sm font-bold px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
-                    STEP {item.step}
-                  </span>
+                  <h3 className="text-2xl font-semibold text-slate-900">
+                    {step.title}
+                  </h3>
                 </div>
-
-                {/* Content */}
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900 dark:text-white">
-                  {item.title}
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+                <p className="text-slate-600">{step.desc}</p>
+              </ScrollStackItem>
             )
           })}
-        </div>
+        </ScrollStack>
+      </div>
 
-        <div className="mt-12 flex items-center justify-center gap-4">
-          <button 
-            onClick={onPrimaryCTA}
-            className="px-8 py-4 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all cursor-pointer"
-          >
-            Start Your Journey
-          </button>
-          <a href="#benefits" className="px-5 md:px-8 py-3.5 md:py-4 bg-slate-100/80 dark:bg-slate-900/80 text-gray-800 dark:text-gray-200 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 border border-slate-400/40 dark:border-slate-600/40 transition-all rounded-xl text-lg font-semibold">
-            Dive Into Benefits
-          </a>
-        </div>
+      <div className="mt-24 flex justify-center">
+        <button
+          onClick={onPrimaryCTA}
+          className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition"
+        >
+          Start Your Journey
+        </button>
       </div>
     </section>
   )

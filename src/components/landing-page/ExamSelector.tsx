@@ -57,7 +57,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     <div className="w-full max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-900/30 rounded-3xl p-4 shadow-sm shadow-purple-600/10">
 
-        <div className="flex mb-5 rounded-2xl border border-purple-200 dark:border-gray-700 overflow-hidden">
+        <div className="flex mb-5 rounded-full border border-purple-200 dark:border-gray-700 overflow-hidden">
           {(['regular', 'entrance'] as const).map(type => (
             <button
               key={type}
