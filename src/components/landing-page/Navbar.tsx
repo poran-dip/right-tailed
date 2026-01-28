@@ -15,29 +15,28 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
 
   return (
     <header>
-      <nav className="fixed top-0 w-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-md z-50 shadow-md">
+      <nav className="fixed top-0 w-full dark:border-b bg-white/70 dark:border-white/20 backdrop-blur-xs dark:bg-slate-900 z-50 shadow-md">
         <div className="container mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
           <a href="#" className="flex items-center gap-3 group">
-            <Image src="/logo.png" height={32} width={32} alt="RightTailed Logo" />
-            <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:from-purple-400 group-hover:to-blue-400 transition-colors">RightTailed</span>
+            <span className="text-md font-bold text-purple-600">RightTailed</span>
           </a>
           
           <div className="hidden md:flex items-center gap-8 lg:gap-12">
             <a
               href="#features"
-              className="font-semibold hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors"
+              className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
             >
               Features
             </a>
             <a
               href="#process"
-              className="font-semibold hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors"
+              className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
             >
               How It Works
             </a>
             <a
               href="#benefits"
-              className="font-semibold hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-all"
+              className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-all"
             >
               Benefits
             </a>
@@ -46,7 +45,7 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
           <div className="hidden md:flex items-center gap-4">
             <button 
               onClick={() => setShowSignInDialog(true)}
-              className="px-4 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 active:scale-95 hover:scale-[1.01] cursor-pointer"
             >
               Sign In
             </button>

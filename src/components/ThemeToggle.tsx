@@ -24,7 +24,7 @@ const ThemeToggle = () => {
   return (
     <button 
       onClick={() => setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark')}
-      className="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors cursor-pointer group"
+      className="p-2.5 rounded-lg bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/30 transition-colors cursor-pointer group"
     >
       {theme === 'dark' ? <Sun className="w-5.5 h-5.5 group-hover:-rotate-90 transition-transform" /> : <Moon className="w-5.5 h-5.5 group-hover:-rotate-90 transition-transform" />}
     </button>
