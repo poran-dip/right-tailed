@@ -39,7 +39,7 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
             <span>Built from real university PYQs, not guesswork</span>
           </div>
       </div>
-      <div className="box w-full md:w-[50%] bg-purple-500 dark:bg-slate-900 dark:border-l dark:border-white/20">
+      <div className="box w-full md:w-[50%] bg-purple-500 rounded-bl-2xl dark:bg-slate-900 dark:border-l dark:border-white/20">
         <img src="/hero.png" alt="" className='h-full w-full object-cover object-top'/>
       </div>
     </div>
