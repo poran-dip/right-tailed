@@ -45,7 +45,7 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
           <div className="hidden md:flex items-center gap-4">
             <button 
               onClick={() => setShowSignInDialog(true)}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 active:scale-95 hover:scale-[1.01] cursor-pointer"
+              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 active:scale-95 hover:scale-[1.01] cursor-pointer"
             >
               Sign In
             </button>

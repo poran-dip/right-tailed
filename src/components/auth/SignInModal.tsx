@@ -1,23 +1,23 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Mail, Lock, Github, Chrome } from 'lucide-react';
+import { X, Mail, Lock } from 'lucide-react';
 
-interface SignInDialogProps {
+interface SignInModalProps {
   onClose: () => void;
+  onSwitchToSignUp: () => void;
 }
 
-const SignInDialog = ({ onClose }: SignInDialogProps) => {
+const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
 
+  // Lock background scroll
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
+    const original = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow = original;
     };
   }, []);
 
@@ -31,26 +31,24 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
       <div className="relative w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-10"
+          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400 cursor-pointer" />
+          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
         </button>
 
         <div className="p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold bg-purple-600 bg-clip-text text-transparent mb-2">
-              {isSignUp ? 'Create your account' : 'Welcome back'}
+            <h2 className="text-3xl font-bold text-purple-600 mb-2">
+              Welcome back
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              {isSignUp
-                ? 'Start your journey to exam success'
-                : 'Sign in to continue your preparation'}
+              Sign in to continue your preparation
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium mb-2">
                 Email
               </label>
               <div className="relative">
@@ -58,15 +56,15 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
                 <input
                   type="email"
                   value={email}
-                  placeholder='Enter your email'
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none transition-colors"
+                  placeholder="Enter your email"
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium mb-2">
                 Password
               </label>
               <div className="relative">
@@ -74,17 +72,22 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
                 <input
                   type="password"
                   value={password}
-                  placeholder='Enter your password'
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none transition-colors"
+                  placeholder="Enter your password"
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none"
                 />
               </div>
             </div>
 
-            <p className='text-sm flex mt-3 w-full'>Forgot your password? <span className='ml-auto underline text-purple-500 cursor-pointer'>Click here</span></p>
+            <p className="text-sm flex mt-2">
+              Forgot your password?
+              <span className="ml-auto underline text-purple-500 cursor-pointer">
+                Click here
+              </span>
+            </p>
 
-            <button className="w-full py-3 mt-4 bg-purple-600 text-white rounded-lg font-bold hover:shadow-lg hover:bg-purple-700 cursor-pointer transition-all">
-              {isSignUp ? 'Create Account' : 'Sign In'}
+            <button className="w-full py-3 mt-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all">
+              Sign In
             </button>
           </div>
 
@@ -107,12 +110,12 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
           </div>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+            Don’t have an account?
             <button
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-purple-600 dark:text-purple-400 cursor-pointer font-semibold hover:underline"
+              onClick={onSwitchToSignUp}
+              className="ml-1 text-purple-600 cursor-pointer font-semibold hover:underline"
             >
-              <p className='ml-1'>{isSignUp ? 'Sign In' : 'Sign Up'}</p>
+              Sign Up
             </button>
           </div>
         </div>
@@ -121,4 +124,4 @@ const SignInDialog = ({ onClose }: SignInDialogProps) => {
   );
 };
 
-export default SignInDialog;
+export default SignInModal;

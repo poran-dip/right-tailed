@@ -66,7 +66,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                 setSearchQuery('');
                 setShowDropdown(false);
               }}
-              className={`flex-1 py-3 font-semibold transition-all ${
+              className={`flex-1 py-2.5 cursor-pointer font-semibold transition-all ${
                 examType === type
                   ? 'bg-purple-600 text-white shadow-md'
                   : 'text-gray-600 dark:text-gray-400 hover:text-purple-600'
