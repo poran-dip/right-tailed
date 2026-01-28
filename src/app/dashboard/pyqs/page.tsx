@@ -1,11 +1,11 @@
 'use client'
 
+import { Suspense, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { pyqs } from '@/lib/pyqs'
 
-export default function PYQPage() {
+function PYQContent() {
   const searchParams = useSearchParams()
 
   const type = searchParams.get('type')
@@ -33,7 +33,7 @@ export default function PYQPage() {
   )
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 px-6 py-12">
+    <div className="px-6 py-10">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div>
@@ -41,7 +41,7 @@ export default function PYQPage() {
             Past Year Question Papers
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2">
-            Filtered results based on your selection
+            Filtered based on your selection
           </p>
         </div>
 
@@ -69,11 +69,11 @@ export default function PYQPage() {
           </select>
         </div>
 
-        {/* PYQ List */}
+        {/* List */}
         <div className="grid gap-6">
           {filteredPYQs.length === 0 && (
             <div className="text-center text-slate-500 py-20">
-              No PYQs found.
+              No PYQs found
             </div>
           )}
 
@@ -91,6 +91,7 @@ export default function PYQPage() {
                     Year {p.year}
                   </p>
                 </div>
+
                 <span className="text-sm px-3 py-1 rounded-full bg-purple-600/10 text-purple-600">
                   {p.questions.length} questions
                 </span>
@@ -100,5 +101,17 @@ export default function PYQPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PYQPage() {
+  return (
+    <Suspense fallback={
+      <div className="p-10 text-center text-slate-500">
+        Loading PYQs…
+      </div>
+    }>
+      <PYQContent />
+    </Suspense>
   )
 }
