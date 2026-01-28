@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { ArrowDown, Search, X } from 'lucide-react';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import { ArrowRight, Search, X } from 'lucide-react';
 import { departments, entranceExams } from '@/lib/data';
 
 export type ExamSelectorHandle = {
@@ -31,31 +30,34 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
     },
   }));
 
-  const filteredItems = examType === 'regular'
-  ? departments.filter(d => 
-      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.category.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  : entranceExams.filter(e => e.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredItems =
+    examType === 'regular'
+      ? departments.filter(d =>
+          d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          d.category.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : entranceExams.filter(e =>
+          e.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
   const canProceed = searchQuery.trim().length > 0;
 
   const handleProceed = () => {
-    if (!canProceed) return;
-    
-    const selectedItem = filteredItems[0];
-    if (!selectedItem) return;
+    if (!canProceed || !filteredItems[0]) return;
 
-    if (examType === 'regular') {
-      window.location.href = `/department/${selectedItem.id}`;
-    } else {
-      window.location.href = `/entrance/${selectedItem.id}`;
-    }
+    const selected = filteredItems[0];
+
+    window.location.href =
+      examType === 'regular'
+        ? `/department/${selected.id}`
+        : `/entrance/${selected.id}`;
   };
 
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="bg-white dark:bg-gray-800 border border-purple-200 dark:border-purple-900/30 rounded-3xl p-4 shadow-sm shadow-purple-600/10">
+
+        {/* Toggle */}
         <div className="flex mb-5 rounded-2xl border border-purple-200 dark:border-gray-700 overflow-hidden">
           {(['regular', 'entrance'] as const).map(type => (
             <button
@@ -65,7 +67,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                 setSearchQuery('');
                 setShowDropdown(false);
               }}
-              className={`flex-1 py-3 cursor-pointer font-semibold transition-all ${
+              className={`flex-1 py-3 font-semibold transition-all ${
                 examType === type
                   ? 'bg-purple-600 text-white shadow-md'
                   : 'text-gray-600 dark:text-gray-400 hover:text-purple-600'
@@ -75,6 +77,8 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             </button>
           ))}
         </div>
+
+        {/* Focus hint */}
         {showFocusIndicator && (
           <div className="hidden lg:block fixed top-28 left-1/2 -translate-x-1/2 z-50">
             <div className="relative bg-purple-600 rounded-2xl px-4 py-3 shadow-2xl animate-in fade-in slide-in-from-top-5 duration-500">
@@ -84,7 +88,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                 </div>
                 <p className="text-white font-semibold whitespace-nowrap">
                   Start searching for your{' '}
-                  {examType === 'regular' ? 'college' : 'entrance exam'} PYQs
+                  {examType === 'regular' ? 'department' : 'entrance exam'} PYQs
                 </p>
                 <button
                   onClick={() => {
@@ -92,7 +96,6 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                       clearTimeout(focusTimeoutRef.current);
                     setShowFocusIndicator(false);
                   }}
-                  className="ml-2"
                 >
                   <X className="w-4 h-4 text-white" />
                 </button>
@@ -101,6 +104,8 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             </div>
           </div>
         )}
+
+        {/* Search */}
         <div className="relative mb-5">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-600" />
           <input
@@ -112,9 +117,14 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             }}
             onFocus={() => setShowDropdown(searchQuery.length > 0)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-            placeholder={examType === 'regular' ? 'Search for your department/program...' : 'Search for entrance exam...'}
-            className="w-full pl-10 md:pl-12 pr-5 py-3 md:py-4 rounded-xl border-2 border-blue-200 dark:border-blue-900/50 bg-white dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+            placeholder={
+              examType === 'regular'
+                ? 'Search for your department/program...'
+                : 'Search for entrance exam...'
+            }
+            className="w-full pl-12 pr-4 py-4 rounded-xl border border-purple-700/10 dark:border-purple-900/50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 outline-none bg-black/3 transition-all"
           />
+
           {showDropdown && filteredItems.length > 0 && (
             <div className="absolute z-10 w-full mt-2 bg-white dark:bg-gray-800 border border-purple-100 dark:border-gray-700 rounded-xl shadow-xl max-h-72 overflow-y-auto">
               {filteredItems.map(item => (
@@ -126,9 +136,13 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                   }}
                   className="w-full px-5 py-3 text-left hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b last:border-b-0"
                 >
-                  <div className="font-medium text-gray-900 dark:text-gray-100">{item.name}</div>
+                  <div className="text-gray-900 dark:text-gray-100 font-medium">
+                    {item.name}
+                  </div>
                   {'category' in item && (
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{item.category}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      {item.category}
+                    </div>
                   )}
                 </button>
               ))}
@@ -141,16 +155,19 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
             </div>
           )}
         </div>
+
+        {/* CTA */}
         <button
           onClick={handleProceed}
           disabled={!canProceed}
-          className={`w-full h-12 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all ${
+          className={`w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${
             canProceed
               ? 'bg-purple-600 hover:bg-purple-700 text-white group'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
           }`}
         >
-          View Past Papers <ArrowRight className='transition-all duration-200 mt-1 group-hover:translate-x-1'/>
+          View Past Papers
+          <ArrowRight className="transition-all duration-200 mt-1 group-hover:translate-x-1" />
         </button>
       </div>
     </div>
