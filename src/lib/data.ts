@@ -170,6 +170,7 @@ export const syllabus = {
 }
 
 export const questionPaper2025 = {
+  "subject": "Computer Networks",
   "year": 2025,
   "questions": [
     {
