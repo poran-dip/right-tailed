@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onClose, activeNav, setActiveNav }: SidebarProps) => 
     <>
       <aside
         ref={sidebarRef}
-        className={`fixed lg:relative top-0 left-0 h-screen
+        className={`fixed lg:relative top-0 left-0 h-screen px-2
           bg-white dark:bg-neutral-900
           border-r border-slate-200 dark:border-neutral-700
           z-50 transition-transform duration-300
