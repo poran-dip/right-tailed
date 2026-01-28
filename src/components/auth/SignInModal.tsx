@@ -66,7 +66,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" className="w-full pl-11 pr-11 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none"/>
                 <button type="button" onClick={() => setShowPassword(prev => !prev)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  {showPassword ? ( <Eye className="w-5 h-5" />) : (<EyeOff className="w-5 h-5" />)}
+                  {showPassword ? ( <Eye className="w-5 h-5 cursor-pointer" />) : (<EyeOff className="w-5 h-5 cursor-pointer" />)}
                 </button>
               </div>
             </div>
