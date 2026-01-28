@@ -34,7 +34,7 @@ const SignUpModal = ({ onClose, onSwitchToSignIn }: SignUpModalProps) => {
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <X className="w-5 h-5 cursor-pointer text-gray-500 dark:text-gray-400" />
         </button>
 
         <div className="p-8">
@@ -111,7 +111,7 @@ const SignUpModal = ({ onClose, onSwitchToSignIn }: SignUpModalProps) => {
               </div>
             </div>
 
-            <button className="w-full py-3 mt-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all">
+            <button className="w-full py-3 mt-4 cursor-pointer bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all">
               Create Account
             </button>
           </div>

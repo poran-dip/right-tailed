@@ -119,7 +119,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
                 ? 'Search for your department/program...'
                 : 'Search for entrance exam...'
             }
-            className="w-full pl-12 pr-4 py-4 rounded-xl border border-purple-700/10 dark:border-purple-900/50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 outline-none bg-black/3 transition-all"
+            className="w-full pl-12 pr-4 py-4 rounded-xl border border-purple-700/10 dark:border-0 dark:bg-gray-900 text-gray-900 dark:text-gray-100 outline-none bg-black/3 transition-all"
           />
 
           {showDropdown && filteredItems.length > 0 && (
@@ -156,7 +156,7 @@ const ExamSelector = forwardRef<ExamSelectorHandle>((_, ref) => {
         <button
           onClick={handleProceed}
           disabled={!canProceed}
-          className={`w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${
+          className={`w-full h-12 rounded-xl cursor-pointer font-semibold flex items-center justify-center gap-2 transition-all ${
             canProceed
               ? 'bg-purple-600 hover:bg-purple-700 text-white group'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
