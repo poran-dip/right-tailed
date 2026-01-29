@@ -15,7 +15,7 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
   return (
     <header>
       <nav className="fixed top-0 w-full dark:border-b bg-white/70 dark:border-white/20 backdrop-blur-xs dark:bg-slate-900 z-50 shadow-md">
-        <div className="container mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-6 py-3 md:py-2 flex items-center justify-between">
           <a href="#" className="flex items-center gap-3 group">
             <span className="text-md font-bold text-purple-600">RightTailed</span>
           </a>

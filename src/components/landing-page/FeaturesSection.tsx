@@ -107,17 +107,17 @@ const FeaturesSection = ({ onPrimaryCTA }: FeaturesSectionProps) => {
           })}
         </div>
 
-        <div className="mt-14 flex items-center justify-center gap-4">
+        <div className="mt-14 grid grid-cols-2 text-center gap-4">
           <button
             onClick={onPrimaryCTA}
-            className="px-12 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg cursor-pointer font-semibold text-lg transition-all"
+            className="max-w-60 place-self-end px-6 md:px-12 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg cursor-pointer font-semibold text-lg transition-all"
           >
             Grab PYQs
           </button>
 
           <a
             href="#process"
-            className="px-12 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium text-lg"
+            className="max-w-60 place-self-start px-4 md:px-10 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium text-lg"
           >
             How It Works
           </a>
