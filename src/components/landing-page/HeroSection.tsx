@@ -22,7 +22,7 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
             <h1 className="text-3xl md:text-5xl mt-10 font-bold text-gray-900 dark:text-gray-50 leading-[1.1] tracking-tight">
               Exams <span className='text-purple-600'>aren't random!</span>
               <br />
-              <span className='text-[2.3rem] text-black/60 dark:text-white/70'>They just pretend to be</span>
+              <span className='text-2xl md:text-4xl text-black/60 dark:text-white/70'>They just pretend to be</span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mt-5 font-light leading-relaxed">
@@ -39,8 +39,8 @@ const HeroSection = forwardRef<HeroHandle>((_, ref) => {
             <span>Built from real university PYQs, not guesswork</span>
           </div>
       </div>
-      <div className="box w-full md:w-[50%] bg-purple-500 rounded-bl-2xl dark:bg-slate-900 dark:border-l dark:border-white/20">
-        <img src="/hero.png" alt="" className='h-full w-full object-cover object-top'/>
+      <div className="box w-full md:w-[50%] bg-purple-500 rounded-b-2xl md:rounded-bl-2xl dark:bg-slate-900 dark:border-l dark:border-white/20">
+        <img src="/hero.png" alt="Right Tailed" className='h-full w-full object-cover object-top'/>
       </div>
     </div>
   )

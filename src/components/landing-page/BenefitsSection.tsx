@@ -17,8 +17,8 @@ const BenefitsSection = ({ onPrimaryCTA }: BenefitsSectionProps) => {
           </p>
         </div>
 
-        <div className="flex items-center justify-center gap-5 my-10">
-          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+        <div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-5 my-10">
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[80%] md:w-[30%]">
             <div className="mb-5 flex justify-center">
               <div className="p-4 rounded-2xl bg-purple-600/10">
                 <Clock className="w-8 h-8 text-purple-600" />
@@ -31,7 +31,7 @@ const BenefitsSection = ({ onPrimaryCTA }: BenefitsSectionProps) => {
               Stop spending time on low-impact topics. Focus only on what moves the needle.
             </p>
           </div>
-          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[80%] md:w-[30%]">
             <div className="mb-5 flex justify-center">
               <div className="p-4 rounded-2xl bg-purple-600/10">
                 <TrendingUp className="w-8 h-8 text-purple-600" />
@@ -44,7 +44,7 @@ const BenefitsSection = ({ onPrimaryCTA }: BenefitsSectionProps) => {
               Data-backed preparation leads to consistent performance gains.
             </p>
           </div>
-          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[30%]">
+          <div className="text-center p-8 rounded-2xl border border-slate-200 dark:border-slate-800 w-[80%] md:w-[30%]">
             <div className="mb-5 flex justify-center">
               <div className="p-4 rounded-2xl bg-purple-600/10">
                 <Heart className="w-8 h-8 text-purple-600" />

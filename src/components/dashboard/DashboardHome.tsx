@@ -60,18 +60,13 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
   }, [syllabus, cardsRef])
 
   return (
-    <div className="w-full px-5 sm:px-6 py-8 sm:py-12">
+    <div className="w-full px-4 sm:px-6 py-8 sm:py-12">
       {/* Header */}
       <div ref={headerRef} className="mb-12 max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-3">
           
-<<<<<<<< HEAD:src/components/dashboard/Home.tsx
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-linear-to-r from-violet-700 via-violet-800 to-purple-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent">
-            Your courses
-========
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-linear-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent">
             Your Courses
->>>>>>>> 8ef1465c6bc746f4044db3c8704def856190c14b:src/components/dashboard/DashboardHome.tsx
           </h1>
         </div>
         <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg ml-0 ">
