@@ -11,7 +11,10 @@ import {
   Play,
   FileText,
   Calendar,
-  Award
+  Award,
+  Plane,
+  PlaneTakeoff,
+  Send
 } from 'lucide-react'
 import { course, paper, student } from '@/lib/types'
 import gsap from 'gsap'
@@ -172,7 +175,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       <div ref={headerRef} className="mb-10 max-w-7xl mx-auto">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-linear-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold bg-linear-to-r from-purple-800 via-purple-600 to-purple-800 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-2">
               Welcome back, {student?.name?.split(' ')[0] || 'Student'}!
             </h1>
             <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg flex items-center gap-2">
@@ -186,7 +189,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       {/* Upcoming Exam Alert */}
       {nextExam && (
         <div className="mb-8 max-w-7xl mx-auto">
-          <div className="relative overflow-hidden bg-linear-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-2xl p-6 shadow-xl shadow-indigo-500/25">
+          <div className="relative overflow-hidden bg-linear-to-br from-purple-700 via-purple-500 to-purple-700 rounded-2xl p-6 shadow-xl shadow-indigo-500/25">
             {/* Animated background effect */}
             <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent"></div>
 
@@ -221,9 +224,9 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
               
               <button
                 onClick={() => router.push(`/dashboard/courses/${encodeURIComponent(nextExam.course)}`)}
-                className="group w-full sm:w-auto px-6 py-3 rounded-xl bg-white text-blue-700 font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105 flex items-center gap-2 shadow-lg"
+                className="group w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-purple-700 font-semibold hover:bg-white/90 transition-all duration-300 cursor-pointer hover:scale-[1.02] flex items-center gap-2 shadow-lg"
               >
-                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5" />
+                <Send className="w-4 sm:w-5 h-4 sm:h-5 mt-0.5" />
                 Start Studying
                 <span className="transform group-hover:translate-x-1 transition-transform">→</span>
               </button>

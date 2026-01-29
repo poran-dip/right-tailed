@@ -18,10 +18,10 @@ import { useDashboard } from '@/contexts/DashboardContext'
 import ThemeToggle from '@/components/ThemeToggle'
 import { useStudentData } from '@/app/dashboard/layout'
 
+
 const Sidebar = () => {
   const router = useRouter()
   const { student } = useStudentData()
-
   const { sidebarOpen, setSidebarOpen, activeNav, setActiveNav } = useDashboard()
 
   useEffect(() => {
@@ -44,37 +44,28 @@ const Sidebar = () => {
   ]
 
   const handleSignOut = async () => {
-    const res = await fetch('/api/auth/sign-out', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-
-    if (!res.ok) {
-      console.error('Sign out failed');
-      return;
-    }
-
-    router.push('/');
+    const res = await fetch('/api/auth/sign-out', { method: 'POST' })
+    if (!res.ok) return
+    router.push('/')
   }
 
   useEffect(() => {
     if (window.innerWidth >= 1024 && sidebarRef.current) {
       const ctx = gsap.context(() => {
         gsap.from(sidebarRef.current!, {
-          x: -50,
-          duration: 0.6,
+          x: -40,
+          opacity: 0,
+          duration: 0.5,
           ease: 'power3.out',
         })
 
-        navItemsRef.current.forEach((item, index) => {
+        navItemsRef.current.forEach((item, i) => {
           if (!item) return
           gsap.from(item, {
             x: -20,
             opacity: 1,
-            duration: 0.4,
-            delay: 0.2 + index * 0.08,
+            duration: 0.3,
+            delay: 0.15 + i * 0.05,
             ease: 'power2.out',
           })
         })
@@ -86,37 +77,40 @@ const Sidebar = () => {
 
   return (
     <>
+      {/* SIDEBAR */}
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 bottom-0 h-dvh pl-2 pr-4 w-64
-          bg-white dark:bg-neutral-900
+        className={`
+          fixed inset-y-0 left-0 z-50 w-52 md:w-58
+          bg-purple-500 dark:bg-slate-900
           border-r border-slate-200 dark:border-neutral-700
-          z-50 transition-transform duration-300
+          transition-transform duration-300
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
-        <div className="flex flex-col h-full p-6 overflow-y-auto">
-          {/* Brand */}
-          <div className="flex items-center justify-between mb-8">
+        {/* INNER WRAPPER (THIS IS WHERE SPACING LIVES) */}
+        <div className="flex h-full flex-col pl-5 py-6 overflow-y-auto">
+          {/* BRAND */}
+          <div className="mb-8 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-purple-600">
+              <h2 className="text-lg font-bold text-white">
                 RightTailed
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Hey, {student?.name || 'Student'}! 👋
+              <p className="text-xs text-white/60 mt-1">
+                Hey, {student?.name || 'Student'}!
               </p>
             </div>
 
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-neutral-800"
+              className="lg:hidden rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-neutral-800"
             >
-              <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+              <X className="h-5 w-5 text-slate-600 dark:text-slate-400" />
             </button>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 space-y-3">
+          {/* NAV */}
+          <nav className="flex-1 space-y-2 pl-2">
             {navItems.map((item, index) => {
               const Icon = item.icon
               const isActive = activeNav === item.id
@@ -132,47 +126,47 @@ const Sidebar = () => {
                     setActiveNav(item.id)
                     if (window.innerWidth < 1024) setSidebarOpen(false)
                   }}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group
+                  className={`
+                    flex items-center gap-3 rounded-lg px-4 py-3 text-md font-medium
+                    transition-all duration-200
                     ${isActive
-                      ? 'bg-purple-600 text-white shadow-lg'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-neutral-800'
+                      ? 'bg-purple-800/40 dark:bg-purple-600 text-white shadow-md'
+                      : 'text-white/80 dark:text-slate-300 hover:bg-black/10 dark:hover:bg-slate-800'
                     }
                   `}
                 >
-                  <Icon
-                    className={`w-5 h-5 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'
-                      }`}
-                  />
-                  <span className="font-medium text-sm">{item.label}</span>
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {item.label}
                 </Link>
               )
             })}
           </nav>
 
-          {/* User */}
-          <div className="pt-6 mt-6 border-t border-slate-200 dark:border-neutral-700">
-            <div className="flex items-center justify-between py-3">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          {/* FOOTER */}
+          <div className="mt-6 px-3 border-t border-slate-200 dark:border-neutral-700 pt-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-white dark:text-slate-300">
                 Theme
               </span>
               <ThemeToggle />
             </div>
 
-            <button 
+            <button
               onClick={handleSignOut}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer"
+              className="flex w-full items-center gap-3 rounded-lg cursor-pointer px-4 py-3
+                text-sm font-medium text-white dark:text-slate-300 hover:bg-white/20 dark:hover:bg-red-900/20"
             >
-              <LogOut className="w-5 h-5" />
-              <span className="text-sm font-medium">Log Out</span>
+              <LogOut className="h-5 w-5" />
+              Log Out
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Mobile overlay */}
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
