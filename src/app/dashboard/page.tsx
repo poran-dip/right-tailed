@@ -4,15 +4,17 @@ import { useEffect, useState, useRef } from 'react'
 import { course, paper } from '@/lib/types'
 import { Menu, BookOpen } from 'lucide-react'
 import gsap from 'gsap'
-import Home from '../../components/dashboard-home'
+import Home from '@/components/dashboard/DashboardHome'
+import { useDashboard } from '@/contexts/DashboardContext'
 
 const DashboardPage = () => {
   const [syllabus, setSyllabus] = useState<course[] | null>(null)
   const [papers, setPapers] = useState<paper[] | null>(null)
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeNav, setActiveNav] = useState('courses')
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
+
+  // Get sidebar controls from context
+  const { toggleSidebar } = useDashboard()
 
   useEffect(() => {
     fetch('/api/user/syllabus')
@@ -76,14 +78,6 @@ const DashboardPage = () => {
     }
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen)
-  }
-
-  const closeSidebar = () => {
-    setSidebarOpen(false)
-  }
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 dark:from-neutral-950 dark:via-blue-950/20 dark:to-indigo-950/30 flex">
       {/* Decorative background elements */}
@@ -92,27 +86,8 @@ const DashboardPage = () => {
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-indigo-400/5 dark:bg-indigo-400/10 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
       </div>
 
-
       {/* Main Content */}
       <div className="flex-1 min-w-0 overflow-x-hidden">
-        {/* Mobile Header with Menu Button */}
-        <div className="lg:hidden sticky top-0 z-30 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-neutral-700 px-4 sm:px-6 py-4 flex items-center justify-between">
-          <button
-            onClick={toggleSidebar}
-            className="w-10 h-10 flex items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
-            aria-label="Open menu"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-              <BookOpen className="w-5 h-5 text-white" strokeWidth={2.5} />
-            </div>
-            <span className="font-bold text-slate-900 dark:text-slate-100">EduDash</span>
-          </div>
-          <div className="w-10"></div> {/* Spacer for centering */}
-        </div>
-
         {/* Home Component */}
         <Home
           syllabus={syllabus}

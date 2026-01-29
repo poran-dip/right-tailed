@@ -1,19 +1,24 @@
 'use client'
 
-import { useState } from 'react'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/dashboard/Sidebar'
+import MobileNavbar from '@/components/dashboard/MobileNavbar'
+import { DashboardProvider } from '@/contexts/DashboardContext'
 
-export default function DashboardLayout({children} : {children: React.ReactNode}) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeNav, setActiveNav] = useState('home')
-
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex bg-white dark:bg-slate-950">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeNav={activeNav} setActiveNav={setActiveNav} />
+    <DashboardProvider>
+      <div className="min-h-screen flex bg-white dark:bg-slate-950">
+        {/* Single Sidebar - handles both mobile and desktop */}
+        <Sidebar />
 
-      <main className="flex-1 overflow-x-hidden">
-        {children}
-      </main>
-    </div>
+        <main className="flex-1 overflow-x-hidden">
+          {/* Mobile Navbar - only shows on mobile */}
+          <MobileNavbar />
+          
+          {/* Page Content */}
+          {children}
+        </main>
+      </div>
+    </DashboardProvider>
   )
 }
