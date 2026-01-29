@@ -189,7 +189,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       {/* Upcoming Exam Alert */}
       {nextExam && (
         <div className="mb-8 max-w-7xl mx-auto">
-          <div className="relative overflow-hidden bg-linear-to-br from-purple-700 via-purple-500 to-purple-700 rounded-2xl p-6 shadow-xl shadow-indigo-500/25">
+          <div className="relative overflow-hidden bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 rounded-2xl p-6 shadow-xl shadow-purple-500/25">
             {/* Animated background effect */}
             <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent"></div>
 

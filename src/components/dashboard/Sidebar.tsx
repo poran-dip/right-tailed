@@ -131,7 +131,7 @@ const Sidebar = () => {
                     transition-all duration-200
                     ${isActive
                       ? 'bg-purple-800/40 dark:bg-purple-600 text-white shadow-md'
-                      : 'text-white/80 dark:text-slate-300 hover:bg-black/10 dark:hover:bg-slate-800'
+                      : 'text-white dark:text-slate-300 hover:bg-black/10 dark:hover:bg-slate-800'
                     }
                   `}
                 >
