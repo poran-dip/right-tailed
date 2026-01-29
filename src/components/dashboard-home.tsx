@@ -65,7 +65,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
       <div ref={headerRef} className="mb-12 max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-3">
           
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-linear-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-100 dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent">
             Your Courses
           </h1>
         </div>
@@ -81,7 +81,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
       >
         <div className="bg-white/60 dark:bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-5 border border-slate-200/50 dark:border-neutral-700/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
               <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
@@ -95,7 +95,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
 
         <div className="bg-white/60 dark:bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-5 border border-slate-200/50 dark:border-neutral-700/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0">
               <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
@@ -109,7 +109,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
 
         <div className="bg-white/60 dark:bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-5 border border-slate-200/50 dark:border-neutral-700/50 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center shrink-0">
               <BookOpen className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
@@ -153,7 +153,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
 
                 <button
                   onClick={() => onToggle(course.name)}
-                  className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-180"
+                  className="shrink-0 w-10 h-10 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-180"
                 >
                   {isOpen ? (
                     <ChevronUp className="w-5 h-5" />
@@ -164,7 +164,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
               </div>
 
               {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-neutral-600 to-transparent mb-5"></div>
+              <div className="h-px bg-linear-to-r from-transparent via-slate-300 dark:via-neutral-600 to-transparent mb-5"></div>
 
               {/* Topics */}
               <div
@@ -175,7 +175,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
                   <span
                     key={topicIndex}
                     className="text-sm px-4 py-2 rounded-full font-medium
-                      bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-800
+                      bg-linear-to-br from-blue-100 to-indigo-100 text-blue-800
                       dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-300
                       border border-blue-200/50 dark:border-blue-700/30
                       transition-all duration-300 hover:scale-105 hover:shadow-md cursor-default"
