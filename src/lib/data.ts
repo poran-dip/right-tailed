@@ -345,3 +345,106 @@ export const exams = [
     dateTime: new Date("2026-02-15T09:30:00+05:30")
   }
 ]
+
+export const achievements = [
+  {
+    name: "Budding Sprout",
+    description: "Upload your first PYQ",
+    isUnlocked: true,
+  },
+  {
+    name: "Paper Pusher",
+    description: "Upload 5 PYQs",
+    isUnlocked: true,
+  },
+  {
+    name: "Archivist",
+    description: "Upload 10 PYQs",
+    isUnlocked: false,
+  },
+  {
+    name: "Department Hero",
+    description: "Upload PYQs from 3 different subjects",
+    isUnlocked: true,
+  },
+  {
+    name: "Knowledge Seeder",
+    description: "Help 10 students by sharing PYQs",
+    isUnlocked: true,
+  },
+  {
+    name: "Late Night Grinder",
+    description: "Upload a PYQ after midnight",
+    isUnlocked: true,
+  },
+  {
+    name: "Consistency Is Key",
+    description: "Upload PYQs on 5 different days",
+    isUnlocked: false,
+  },
+  {
+    name: "Exam Season Soldier",
+    description: "Upload PYQs during exam week",
+    isUnlocked: true,
+  },
+  {
+    name: "Quality Control",
+    description: "Upload a PYQ with all questions properly tagged",
+    isUnlocked: false,
+  },
+  {
+    name: "Tag Master",
+    description: "Tag 50 questions with topics",
+    isUnlocked: false,
+  },
+  {
+    name: "Syllabus Slayer",
+    description: "Cover all topics of a subject using PYQs",
+    isUnlocked: false,
+  },
+  {
+    name: "Heatmap Enjoyer",
+    description: "View topic weightage insights for the first time",
+    isUnlocked: true,
+  },
+  {
+    name: "Data-Driven",
+    description: "Create your first personalized prep plan",
+    isUnlocked: false,
+  },
+  {
+    name: "Mock Test Rookie",
+    description: "Attempt your first mock test",
+    isUnlocked: true,
+  },
+  {
+    name: "Against the Clock",
+    description: "Complete a mock test without pausing",
+    isUnlocked: false,
+  },
+  {
+    name: "Redemption Arc",
+    description: "Improve your mock test score in the same subject",
+    isUnlocked: false,
+  },
+  {
+    name: "Feedback Loop Closed",
+    description: "Review topic-level feedback after a test",
+    isUnlocked: false,
+  },
+  {
+    name: "Exam Whisperer",
+    description: "Predict high-weightage topics correctly",
+    isUnlocked: false,
+  },
+  {
+    name: "Community MVP",
+    description: "Receive 25 upvotes on your uploads",
+    isUnlocked: false,
+  },
+  {
+    name: "PYQ Sensei",
+    description: "Reach the top contributor leaderboard",
+    isUnlocked: false,
+  },
+]

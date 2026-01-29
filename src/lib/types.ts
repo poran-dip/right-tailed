@@ -15,14 +15,24 @@ export interface paper {
   questions: question[]
 }
 
-export interface student {
+export interface achievement {
   name: string
-  email: string
-  semester: number
-  exams: exam[]
+  description: string
+  isUnlocked: boolean
 }
 
 export interface exam {
   course: string
   dateTime: Date
+}
+
+export interface student {
+  name: string
+  email: string
+  semester: number
+  exams: Array<{
+    course: string
+    dateTime: string | Date
+  }>
+  achievements?: achievement[]
 }

@@ -24,6 +24,13 @@ const Sidebar = () => {
 
   const { sidebarOpen, setSidebarOpen, activeNav, setActiveNav } = useDashboard()
 
+  useEffect(() => {
+    const pathname = window.location.pathname
+    const matchedItem = navItems.find(item => item.href === pathname)
+    
+    setActiveNav(matchedItem ? matchedItem.id : 'home')
+  }, [])
+
   const sidebarRef = useRef<HTMLDivElement>(null)
   const navItemsRef = useRef<(HTMLAnchorElement | null)[]>([])
 
