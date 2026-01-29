@@ -330,3 +330,18 @@ export const questionPaper2025 = {
     }
   ]
 }
+
+export const exams = [
+  {
+    course: "Computer Networks",
+    dateTime: new Date("2026-02-01T09:30:00+05:30")
+  },
+  {
+    course: "Operating Systems",
+    dateTime: new Date("2026-02-02T09:30:00+05:30")
+  },
+  {
+    course: "Computer Networks",
+    dateTime: new Date("2026-02-15T09:30:00+05:30")
+  }
+]

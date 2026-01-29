@@ -14,3 +14,15 @@ export interface paper {
   year: number
   questions: question[]
 }
+
+export interface student {
+  name: string
+  email: string
+  semester: number
+  exams: exam[]
+}
+
+export interface exam {
+  course: string
+  dateTime: Date
+}

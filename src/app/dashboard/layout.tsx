@@ -1,37 +1,75 @@
 'use client'
 
-import { useState } from 'react'
-import { Menu } from 'lucide-react'
+import { useEffect, useState, createContext, useContext } from 'react'
 import Sidebar from '@/components/dashboard/Sidebar'
+import MobileNavbar from '@/components/dashboard/MobileNavbar'
+import { DashboardProvider } from '@/contexts/DashboardContext'
+import { course, paper, student } from '@/lib/types'
+
+interface StudentData {
+  syllabus: course[] | null
+  papers: paper[] | null
+  student: student | null
+  isLoading: boolean
+}
+
+const StudentDataContext = createContext<StudentData>({
+  syllabus: null,
+  papers: null,
+  student: null,
+  isLoading: true,
+})
+
+export const useStudentData = () => useContext(StudentDataContext)
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeNav, setActiveNav] = useState('home')
+  const [syllabus, setSyllabus] = useState<course[] | null>(null)
+  const [papers, setPapers] = useState<paper[] | null>(null)
+  const [student, setStudent] = useState<student | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [syllabusRes, papersRes, userRes] = await Promise.all([
+          fetch('/api/user/syllabus'),
+          fetch('/api/user/papers'),
+          fetch('/api/user')
+        ])
+
+        const syllabusData = await syllabusRes.json()
+        const papersData = await papersRes.json()
+        const userData = await userRes.json()
+
+        setSyllabus(syllabusData.course)
+        setPapers(papersData.papers)
+        setStudent(userData.student)
+      } catch (error) {
+        console.error('Failed to fetch student data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
-    <div className="h-screen overflow-hidden flex bg-white dark:bg-slate-950">
-      <Sidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        activeNav={activeNav}
-        setActiveNav={setActiveNav}
-      />
+    <DashboardProvider>
+      <StudentDataContext.Provider
+        value={{ syllabus, papers, student, isLoading }}
+      >
+        <div className="min-h-screen flex bg-white dark:bg-slate-950">
+          <Sidebar />
 
-      <main className="flex-1 flex flex-col">
-        <div className="lg:hidden sticky top-0 z-30 bg-white/90 dark:bg-neutral-900/90 backdrop-blur border-b border-slate-200 dark:border-neutral-700 px-4 py-2 flex items-center justify-between">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="w-10 h-10 flex items-center justify-center rounded-md text-purple-600"
-          >
-            <Menu className="w-6.5 h-6.5" strokeWidth={3} />
-          </button>
-          <img src="/icon0.svg" alt="" className="h-7" />
-        </div>
+          <main className="flex-1 overflow-x-hidden lg:ml-64">
+            <MobileNavbar />
 
-        <div className="flex-1 overflow-y-auto overflow-x-hidden">
-          {children}
+            <div className="mt-12 lg:mt-0" /> {/* Spacer */}
+            {children}
+          </main>
         </div>
-      </main>
-    </div>
+      </StudentDataContext.Provider>
+    </DashboardProvider>
   )
 }
