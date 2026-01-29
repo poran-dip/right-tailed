@@ -15,9 +15,13 @@ import {
 import gsap from 'gsap'
 import { useRouter } from 'next/navigation'
 import { useDashboard } from '@/contexts/DashboardContext'
+import ThemeToggle from '@/components/ThemeToggle'
+import { useStudentData } from '@/app/dashboard/layout'
 
 const Sidebar = () => {
   const router = useRouter()
+  const { studentName, studentEmail } = useStudentData()
+
   const { sidebarOpen, setSidebarOpen, activeNav, setActiveNav } = useDashboard()
 
   const sidebarRef = useRef<HTMLDivElement>(null)
@@ -92,7 +96,7 @@ const Sidebar = () => {
                 RightTailed
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Student Dashboard
+                Hey, {studentName || 'Student'}! 👋
               </p>
             </div>
 
@@ -140,18 +144,11 @@ const Sidebar = () => {
 
           {/* User */}
           <div className="pt-6 mt-6 border-t border-slate-200 dark:border-neutral-700">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-neutral-800 mb-3">
-              <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
-                  Student Name
-                </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                  student@email.com
-                </p>
-              </div>
+            <div className="flex items-center justify-between py-3">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                Theme
+              </span>
+              <ThemeToggle />
             </div>
 
             <button 

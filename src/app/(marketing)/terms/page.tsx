@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-slate-900 py-16 px-6">
+    <main className="py-16 px-6 mt-8 mb-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -117,6 +117,6 @@ export default function TermsPage() {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

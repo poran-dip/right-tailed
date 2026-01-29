@@ -1,32 +1,14 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { course, paper } from '@/lib/types'
-import { Menu, BookOpen } from 'lucide-react'
+import { useState, useRef } from 'react'
 import gsap from 'gsap'
 import Home from '@/components/dashboard/DashboardHome'
-import { useDashboard } from '@/contexts/DashboardContext'
+import { useStudentData } from './layout'
 
 const DashboardPage = () => {
-  const [syllabus, setSyllabus] = useState<course[] | null>(null)
-  const [papers, setPapers] = useState<paper[] | null>(null)
+  const { syllabus, papers, isLoading } = useStudentData()
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-
-  // Get sidebar controls from context
-  const { toggleSidebar } = useDashboard()
-
-  useEffect(() => {
-    fetch('/api/user/syllabus')
-      .then((res) => res.json())
-      .then((data) => setSyllabus(data.course))
-  }, [])
-
-  useEffect(() => {
-    fetch('/api/user/papers')
-      .then((res) => res.json())
-      .then((data) => setPapers(data.papers))
-  }, [])
 
   const toggle = (courseName: string) => {
     const cardElement = cardsRef.current.find(
@@ -78,17 +60,22 @@ const DashboardPage = () => {
     }
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-slate-600 dark:text-slate-400">Loading...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 dark:from-neutral-950 dark:via-blue-950/20 dark:to-indigo-950/30 flex">
-      {/* Decorative background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-150 h-150 bg-blue-400/5 dark:bg-blue-400/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-indigo-400/5 dark:bg-indigo-400/10 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 min-w-0 overflow-x-hidden">
-        {/* Home Component */}
         <Home
           syllabus={syllabus}
           papers={papers}

@@ -16,25 +16,25 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
     <header>
       <nav className="fixed top-0 w-full dark:border-b bg-white/70 dark:border-white/20 backdrop-blur-xs dark:bg-slate-900 z-50 shadow-md">
         <div className="container mx-auto px-4 md:px-6 py-3 md:py-2 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-3 group">
+          <a href="/#" className="flex items-center gap-3 group">
             <span className="text-md font-bold text-purple-600">RightTailed</span>
           </a>
           
           <div className="hidden md:flex items-center gap-8 lg:gap-12">
             <a
-              href="#features"
+              href="/#features"
               className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
             >
               Features
             </a>
             <a
-              href="#process"
+              href="/#process"
               className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
             >
               How It Works
             </a>
             <a
-              href="#benefits"
+              href="/#benefits"
               className="font-semibold hover:text-purple-600 dark:hover:text-purple-400 transition-all"
             >
               Benefits
