@@ -7,7 +7,7 @@ const MobileNavbar = () => {
   const { toggleSidebar } = useDashboard()
 
   return (
-    <div className="lg:hidden sticky top-0 z-30 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-neutral-700">
+    <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-neutral-700">
       <div className="flex items-center justify-between px-4 py-2">
         <button
           onClick={toggleSidebar}

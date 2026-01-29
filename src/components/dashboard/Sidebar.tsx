@@ -20,7 +20,7 @@ import { useStudentData } from '@/app/dashboard/layout'
 
 const Sidebar = () => {
   const router = useRouter()
-  const { studentName, studentEmail } = useStudentData()
+  const { student } = useStudentData()
 
   const { sidebarOpen, setSidebarOpen, activeNav, setActiveNav } = useDashboard()
 
@@ -81,7 +81,7 @@ const Sidebar = () => {
     <>
       <aside
         ref={sidebarRef}
-        className={`fixed lg:relative top-0 left-0 h-dvh pl-2 pr-4
+        className={`fixed top-0 left-0 bottom-0 h-dvh pl-2 pr-4 w-64
           bg-white dark:bg-neutral-900
           border-r border-slate-200 dark:border-neutral-700
           z-50 transition-transform duration-300
@@ -96,7 +96,7 @@ const Sidebar = () => {
                 RightTailed
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Hey, {studentName || 'Student'}! 👋
+                Hey, {student?.name || 'Student'}! 👋
               </p>
             </div>
 

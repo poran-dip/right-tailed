@@ -4,21 +4,19 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import Sidebar from '@/components/dashboard/Sidebar'
 import MobileNavbar from '@/components/dashboard/MobileNavbar'
 import { DashboardProvider } from '@/contexts/DashboardContext'
-import { course, paper } from '@/lib/types'
+import { course, paper, student } from '@/lib/types'
 
 interface StudentData {
   syllabus: course[] | null
   papers: paper[] | null
-  studentName: string | null
-  studentEmail: string | null
+  student: student | null
   isLoading: boolean
 }
 
 const StudentDataContext = createContext<StudentData>({
   syllabus: null,
   papers: null,
-  studentName: null,
-  studentEmail: null,
+  student: null,
   isLoading: true,
 })
 
@@ -27,8 +25,7 @@ export const useStudentData = () => useContext(StudentDataContext)
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [syllabus, setSyllabus] = useState<course[] | null>(null)
   const [papers, setPapers] = useState<paper[] | null>(null)
-  const [studentName, setStudentName] = useState<string | null>(null)
-  const [studentEmail, setStudentEmail] = useState<string | null>(null)
+  const [student, setStudent] = useState<student | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -46,8 +43,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         setSyllabus(syllabusData.course)
         setPapers(papersData.papers)
-        setStudentName(userData.name)
-        setStudentEmail(userData.email)
+        setStudent(userData.student)
       } catch (error) {
         console.error('Failed to fetch student data:', error)
       } finally {
@@ -61,13 +57,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <DashboardProvider>
       <StudentDataContext.Provider
-        value={{ syllabus, papers, studentName, studentEmail, isLoading }}
+        value={{ syllabus, papers, student, isLoading }}
       >
         <div className="min-h-screen flex bg-white dark:bg-slate-950">
           <Sidebar />
 
-          <main className="flex-1 overflow-x-hidden">
+          <main className="flex-1 overflow-x-hidden lg:ml-64">
             <MobileNavbar />
+
+            <div className="mt-12 lg:mt-0" /> {/* Spacer */}
             {children}
           </main>
         </div>
