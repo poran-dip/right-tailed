@@ -18,41 +18,40 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = async () => {
-    if(!email) {
+    if (!email) {
       toast.warn("Please enter your email!")
-      return;
+      return
     }
-    if(!password) {
+    if (!password) {
       toast.warn("Please enter a password!")
-      return;
+      return
     }
 
-    const res = await fetch('/api/auth/sign-in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    try {
+      const res = await fetch('/api/auth/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    if (!res.ok) {
-      console.error('signin failed');
-      return;
-    }
+      const data = await res.json()
 
-    const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Sign in failed")
+        return
+      }
 
-    if (data.success && data.student?.id) {
-      localStorage.setItem('studentId', data.student.id);
-      toast.success("Signed in successfully");
-      router.push('/dashboard');
-    } else {
-      toast.error('Invalid response from server');
+      localStorage.setItem('studentId', data.student.id)
+      toast.success("Signed in successfully")
+      router.push('/dashboard')
+
+    } catch (err) {
+      toast.error("Something went wrong. Try again.")
     }
   }
+
 
   // Lock background scroll
   useEffect(() => {
@@ -65,7 +64,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose}/>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
         <button onClick={onClose} className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -106,15 +105,15 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input 
-                  type={showPassword ? 'text' : 'password'} 
+                <input
+                  type={showPassword ? 'text' : 'password'}
                   required
-                  value={password} onChange={e => setPassword(e.target.value)} 
-                  placeholder="Enter your password" 
-                  className="w-full pl-11 pr-11 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none"/
+                  value={password} onChange={e => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full pl-11 pr-11 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:border-purple-400 focus:outline-none" /
                 >
                 <button type="button" onClick={() => setShowPassword(prev => !prev)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  {showPassword ? ( <Eye className="w-5 h-5 cursor-pointer" />) : (<EyeOff className="w-5 h-5 cursor-pointer" />)}
+                  {showPassword ? (<Eye className="w-5 h-5 cursor-pointer" />) : (<EyeOff className="w-5 h-5 cursor-pointer" />)}
                 </button>
               </div>
             </div>
@@ -126,7 +125,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
               </span>
             </p>
 
-            <button 
+            <button
               onClick={handleSignIn}
               className="w-full py-3 mt-4 cursor-pointer bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all"
             >

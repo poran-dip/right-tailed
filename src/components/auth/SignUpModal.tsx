@@ -22,12 +22,17 @@ const SignUpModal = ({ onClose, onSwitchToSignIn }: SignUpModalProps) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSignUp = async () => {
-    if(!name || !email || !password || !confirmPassword) return;
-    if(password !== confirmPassword) {
-      console.error("Passwords don't match!")
-      return;
-    }
+  if (!name || !email || !password || !confirmPassword) {
+    toast.warn("Please fill all fields")
+    return
+  }
 
+  if (password !== confirmPassword) {
+    toast.error("Passwords do not match")
+    return
+  }
+
+  try {
     const res = await fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
@@ -37,27 +42,26 @@ const SignUpModal = ({ onClose, onSwitchToSignIn }: SignUpModalProps) => {
         name,
         email,
         password,
-        confirmPassword
+        confirmPassword,
       }),
-    });
+    })
+
+    const data = await res.json()
 
     if (!res.ok) {
-      console.error('Sign up failed');
-      return;
+      toast.error(data.error || "Sign up failed")
+      return
     }
 
-    const data = await res.json();
-    
-    if (data.success && data.student?.id) {
-      localStorage.setItem('studentId', data.student.id);
-      toast.success("Signed up successfully");
-      router.push('/dashboard');
-    } else {
-      toast.error('Invalid response from server');
-    }
+    localStorage.setItem('studentId', data.student.id)
+    toast.success("Signed up successfully")
+    router.push('/dashboard')
 
-    router.push('/dashboard');
+  } catch (err) {
+    toast.error("Something went wrong. Please try again.")
   }
+}
+
 
   useEffect(() => {
     const original = document.body.style.overflow;
