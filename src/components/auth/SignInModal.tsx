@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { signIn } from "next-auth/react";
 
 interface SignInModalProps {
   onClose: () => void;
@@ -132,9 +133,9 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
             </p>
 
             <button onClick={handleSignIn} disabled={isLoading} className={`w-full text-white transition-all duration-300 bg-purple-600 py-3 mt-4 rounded-lg font-bold transition-all${isLoading
-                  ? 'bg-purple-400 cursor-not-allowed'
-                  : 'bg-purple-600 hover:bg-purple-700 cursor-pointer'
-                }`}>
+              ? 'bg-purple-400 cursor-not-allowed'
+              : 'bg-purple-600 hover:bg-purple-700 cursor-pointer'
+              }`}>
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <span className="h-4 w-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
@@ -159,10 +160,16 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
           </div>
 
           <div className="space-y-3 mb-6">
-            <button className="w-full flex items-center justify-center gap-2 cursor-pointer h-12 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold">
+            <button
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              className="w-full flex items-center justify-center gap-2 cursor-pointer h-12
+             border-2 border-gray-200 dark:border-gray-700 rounded-lg
+             hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold"
+            >
               <img src="/Google.png" alt="" className="h-6 w-6" />
               Continue with Google
             </button>
+
           </div>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
