@@ -1,38 +1,51 @@
-export interface course {
+import mongoose, { ObjectId } from "mongoose"
+
+export interface IStudent extends mongoose.Document {
   name: string
-  topics: string[]
+  email: string
+  passwordHash: string
+  departmentId: ObjectId
+  uploadedPapers: ObjectId[]
+  savedPapers: ObjectId[]
+  upcomingExams: IExam[]
+  createdAt: Date
 }
 
-export interface question {
-  question: string
-  marks: number
-  topic: string
+export interface ISubject extends mongoose.Document {
+  name: string
+  departmentId: ObjectId
+  semester: number
+  topics: ITopic[]
 }
 
-export interface paper {
-  subject: string
+export interface ITopic {
+  _id?: ObjectId
+  name: string
+  keywords: string[]
+}
+
+export interface IPaper extends mongoose.Document {
+  subjectId: ObjectId
   year: number
-  questions: question[]
+  questions: IQuestion[]
+  uploadedBy: ObjectId
+  createdAt: Date
 }
 
-export interface achievement {
-  name: string
-  description: string
-  isUnlocked: boolean
+export interface IQuestion {
+  _id?: ObjectId
+  text: string
+  marks: number
+  topicId: ObjectId
 }
 
-export interface exam {
-  course: string
+export interface IExam {
+  subjectId: ObjectId
   dateTime: Date
 }
 
-export interface student {
+export interface IDepartment extends mongoose.Document {
+  code: string
   name: string
-  email: string
-  semester: number
-  exams: Array<{
-    course: string
-    dateTime: string | Date
-  }>
-  achievements?: achievement[]
+  subjects: ObjectId[]
 }
