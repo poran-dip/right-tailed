@@ -1,9 +1,9 @@
 "use client"
 
-export default function Settings() {
-    return (
-        <div>
-            
-        </div>
-    );
+import Settings from "@/components/dashboard/Settings";
+
+export default function SettingsPage() {
+  return (
+    <Settings />
+  );
 }
