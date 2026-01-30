@@ -160,12 +160,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
           </div>
 
           <div className="space-y-3 mb-6">
-            <button
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="w-full flex items-center justify-center gap-2 cursor-pointer h-12
-             border-2 border-gray-200 dark:border-gray-700 rounded-lg
-             hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold"
-            >
+            <button onClick={() => signIn("google", { callbackUrl: "/dashboard" })} className="w-full flex items-center justify-center gap-2 cursor-pointer h-12 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold">
               <img src="/Google.png" alt="" className="h-6 w-6" />
               Continue with Google
             </button>
@@ -173,7 +168,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
           </div>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            Don’t have an account?
+            Don't have an account?
             <button onClick={onSwitchToSignUp} className="ml-1 text-purple-600 cursor-pointer font-semibold hover:underline">
               Sign Up
             </button>
