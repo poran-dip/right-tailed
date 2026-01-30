@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 interface SignInModalProps {
   onClose: () => void;
@@ -17,7 +18,14 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = async () => {
-    if(!email || !password) return;
+    if(!email) {
+      toast.warn("Please enter your email!")
+      return;
+    }
+    if(!password) {
+      toast.warn("Please enter a password!")
+      return;
+    }
 
     const res = await fetch('/api/auth/sign-in', {
       method: 'POST',
@@ -36,6 +44,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
     }
 
     router.push('/dashboard');
+    toast.success("Signed in successfully")
   }
 
   // Lock background scroll
