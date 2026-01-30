@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 interface SignUpModalProps {
   onClose: () => void;
@@ -36,12 +37,23 @@ const SignUpModal = ({ onClose, onSwitchToSignIn }: SignUpModalProps) => {
         name,
         email,
         password,
+        confirmPassword
       }),
     });
 
     if (!res.ok) {
       console.error('Sign up failed');
       return;
+    }
+
+    const data = await res.json();
+    
+    if (data.success && data.student?.id) {
+      localStorage.setItem('studentId', data.student.id);
+      toast.success("Signed up successfully");
+      router.push('/dashboard');
+    } else {
+      toast.error('Invalid response from server');
     }
 
     router.push('/dashboard');

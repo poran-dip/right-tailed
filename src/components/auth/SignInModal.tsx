@@ -43,8 +43,15 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
       return;
     }
 
-    router.push('/dashboard');
-    toast.success("Signed in successfully")
+    const data = await res.json();
+
+    if (data.success && data.student?.id) {
+      localStorage.setItem('studentId', data.student.id);
+      toast.success("Signed in successfully");
+      router.push('/dashboard');
+    } else {
+      toast.error('Invalid response from server');
+    }
   }
 
   // Lock background scroll

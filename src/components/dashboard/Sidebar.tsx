@@ -46,6 +46,7 @@ const Sidebar = () => {
   const handleSignOut = async () => {
     const res = await fetch('/api/auth/sign-out', { method: 'POST' })
     if (!res.ok) return
+    localStorage.removeItem('studentId')
     router.push('/')
   }
 

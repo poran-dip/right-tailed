@@ -1,10 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
-import { exams, achievements } from "@/lib/data";
+import dbConnect from '@/lib/db';
+import { Student, Subject, Paper } from '@/models';
 
-// app/api/user/syllabus/route.ts
-export async function GET(_req: NextRequest) {
-  return NextResponse.json(
-    { student: { name: 'Student123', email: 'student@example.com', semester: 6, exams, achievements } },
-    { status: 200 }
-  )
+export async function GET(req: NextRequest) {
+  try {
+    const studentId = req.nextUrl.searchParams.get('id');
+    
+    if (!studentId) {
+      return NextResponse.json(
+        { success: false, error: "Student ID required" },
+        { status: 400 }
+      );
+    }
+
+    await dbConnect();
+
+    const student = await Student.findById(studentId)
+      .populate('subjectIds')
+      .populate('paperIds')
+      .lean();
+
+    if (!student) {
+      return NextResponse.json(
+        { success: false, error: "Student not found" },
+        { status: 404 }
+      );
+    }
+
+    const { password, ...studentData } = student;
+
+    return NextResponse.json(
+      { 
+        success: true,
+        student: studentData
+      },
+      { status: 200 }
+    );
+
+  } catch (error) {
+    console.error('Get student error:', error);
+    return NextResponse.json(
+      { success: false, error: "Server error" },
+      { status: 500 }
+    );
+  }
 }

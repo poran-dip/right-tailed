@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -10,9 +11,15 @@ interface NavbarProps {
 }
 
 const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
   const scrollYRef = useRef(0)
+
+  useEffect(() => {
+    setSignedIn(!!localStorage.getItem('studentId'))
+  }, [])
 
   useEffect(() => {
     if (menuOpen) {
@@ -62,12 +69,24 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={() => setShowSignInDialog(true)}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold"
-            >
-              Sign In
-            </button>
+            {signedIn &&
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold"
+              >
+                Open Dashboard
+              </button>
+            }
+
+            {!signedIn &&
+              <button
+                onClick={() => setShowSignInDialog(true)}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold"
+              >
+                Sign In
+              </button>
+            }
+            
             <ThemeToggle />
           </div>
         </div>
