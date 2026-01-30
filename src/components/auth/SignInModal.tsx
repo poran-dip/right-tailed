@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { signIn } from "next-auth/react";
 
 interface SignInModalProps {
   onClose: () => void;
@@ -12,6 +13,8 @@ interface SignInModalProps {
 
 const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +31,8 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
     }
 
     try {
+      setIsLoading(true)
+
       const res = await fetch('/api/auth/sign-in', {
         method: 'POST',
         headers: {
@@ -40,6 +45,7 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
 
       if (!res.ok) {
         toast.error(data.error || "Sign in failed")
+        setIsLoading(false)
         return
       }
 
@@ -49,11 +55,12 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
 
     } catch (err) {
       toast.error("Something went wrong. Try again.")
+      setIsLoading(false)
     }
   }
 
 
-  // Lock background scroll
+
   useEffect(() => {
     const original = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -125,12 +132,20 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
               </span>
             </p>
 
-            <button
-              onClick={handleSignIn}
-              className="w-full py-3 mt-4 cursor-pointer bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-all"
-            >
-              Sign In
+            <button onClick={handleSignIn} disabled={isLoading} className={`w-full text-white transition-all duration-300 bg-purple-600 py-3 mt-4 rounded-lg font-bold transition-all${isLoading
+              ? 'bg-purple-400 cursor-not-allowed'
+              : 'bg-purple-600 hover:bg-purple-700 cursor-pointer'
+              }`}>
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="h-4 w-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                  Signing in...
+                </span>
+              ) : (
+                'Sign In'
+              )}
             </button>
+
           </div>
 
           <div className="relative my-6">
@@ -145,14 +160,15 @@ const SignInModal = ({ onClose, onSwitchToSignUp }: SignInModalProps) => {
           </div>
 
           <div className="space-y-3 mb-6">
-            <button className="w-full flex items-center justify-center gap-2 cursor-pointer h-12 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold">
+            <button onClick={() => signIn("google", { callbackUrl: "/dashboard" })} className="w-full flex items-center justify-center gap-2 cursor-pointer h-12 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-semibold">
               <img src="/Google.png" alt="" className="h-6 w-6" />
               Continue with Google
             </button>
+
           </div>
 
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            Don’t have an account?
+            Don't have an account?
             <button onClick={onSwitchToSignUp} className="ml-1 text-purple-600 cursor-pointer font-semibold hover:underline">
               Sign Up
             </button>

@@ -25,8 +25,6 @@ export const useStudentData = () => useContext(StudentDataContext)
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
 
-  useAuthGuard();
-
   const [syllabus, setSyllabus] = useState<course[] | null>(null)
   const [papers, setPapers] = useState<paper[] | null>(null)
   const [student, setStudent] = useState<student | null>(null)
@@ -37,11 +35,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       try {
         const studentId = localStorage.getItem('studentId')
         
-        if (!studentId) {
-          console.error('No student ID found in localStorage')
-          setIsLoading(false)
-          return
-        }
+        // if (!studentId) {
+        //   console.error('No student ID found in localStorage')
+        //   setIsLoading(false)
+        //   return
+        // }                                                      //not needed, oAuth implemented
         
         const userRes = await fetch(`/api/user?id=${studentId}`)
         const userData = await userRes.json()
