@@ -4,9 +4,12 @@ import { Suspense, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { pyqs } from '@/lib/pyqs'
+import { useRouter } from 'next/navigation';
 
 function PYQContent() {
   const searchParams = useSearchParams()
+
+  const router = useRouter();
 
   // URL params (optional, fallback only)
   const initialDept = searchParams.get('department') || 'all'
@@ -129,7 +132,17 @@ function PYQContent() {
                 </div>
 
                 <div className='w-full mt-3'>
-                  <p className='text-right font-semibold cursor-pointer hover:text-purple-100 hover:scale-[1.01] transition-all duration-300'>View paper {'>'} </p>
+                  <button className='w-full text-right cursor-pointer'
+                    onClick={() =>
+                      router.push(
+                        `/dashboard/pyqs/${p.subject
+                          .toLowerCase()
+                          .trim()
+                          .replace(/\s+/g, '-')}/${p.year}`
+                      )
+                    }>
+                    View paper →
+                  </button>
                 </div>
 
               </div>
