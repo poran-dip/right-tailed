@@ -18,6 +18,8 @@ import {
 } from 'lucide-react'
 import { course, paper, student } from '@/lib/types'
 import gsap from 'gsap'
+import { useState } from 'react'
+import UploadModal from '../Upload'
 
 interface HomeProps {
   syllabus: course[] | null
@@ -39,6 +41,9 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
   const coursesRef = useRef<HTMLDivElement>(null)
   const papersRef = useRef<HTMLDivElement>(null)
   const actionsRef = useRef<HTMLDivElement>(null)
+
+  const [showUploadModal, setShowUploadModal] = useState(false)
+
 
   // Calculate topic ROI for each course
   const courseROIData = useMemo(() => {
@@ -312,12 +317,13 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
               <p className="text-black/70 dark:text-white/70 text-sm">Add past year questions to expand the database</p>
             </div>
           </div>
-          <button onClick={() => router.push('/dashboard/upload')} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 font-semibold px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
+          <button onClick={() => setShowUploadModal(true)} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 font-semibold px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
             Upload PYQs
             <span className="inline-block transition-transform duration-200 group-hover:translate-x-1.5">
               →
             </span>
           </button>
+
         </div>
 
         <div className="w-[50%] flex flex-col relative overflow-hidden dark:text-white transition-all duration-300 hover:bg-purple-50/5 border border-purple-600/20 dark:border-purple-500/70 text-black rounded-2xl p-3 sm:p-6">
@@ -480,6 +486,9 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
           )}
         </div>
       </div>
+      
+      <UploadModal open={showUploadModal} onClose={() => setShowUploadModal(false)}/>
+
     </div>
   )
 }
