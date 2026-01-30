@@ -45,6 +45,10 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
   const [showUploadModal, setShowUploadModal] = useState(false)
 
 
+  const uploadPDFfunction=()=>{
+    
+  }
+
   // Calculate topic ROI for each course
   const courseROIData = useMemo(() => {
     if (!syllabus || !papers) return {}

@@ -20,3 +20,7 @@ next-env.d.ts
 
 # testing
 test
+
+# .gitignore
+public/uploads/*
+!public/uploads/.gitkeep
