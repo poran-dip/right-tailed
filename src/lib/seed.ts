@@ -13,19 +13,16 @@ async function seedData() {
     const csDept = await Department.create({
       code: 'CSE',
       name: 'Computer Science and Engineering',
-      subjects: []
     })
 
     const eceDept = await Department.create({
       code: 'ECE',
       name: 'Electronics and Communication Engineering',
-      subjects: []
     })
 
     const eeDept = await Department.create({
       code: 'EE',
       name: 'Electrical Engineering',
-      subjects: []
     })
 
     // CSE Subjects

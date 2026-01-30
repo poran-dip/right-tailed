@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from 'react'
 import { ChevronDown, ChevronUp, Sparkles, BookOpen, Layers } from 'lucide-react'
-import { course, paper } from '@/lib/types'
+import { ISubject, IPaper } from '@/lib/db.types'
 import gsap from 'gsap'
 
 interface HomeProps {
-  syllabus: course[] | null
-  papers: paper[] | null
+  syllabus: ISubject[] | null
+  papers: IPaper[] | null
   expanded: Record<string, boolean>
   onToggle: (courseName: string) => void
   onCardHover: (index: number, isEntering: boolean) => void
@@ -156,7 +156,7 @@ const Home = ({ syllabus, papers, expanded, onToggle, onCardHover, cardsRef }: H
 
               <div className="topics-container flex flex-wrap gap-2 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-neutral-700 scrollbar-track-transparent" style={{ maxHeight: isOpen ? 320 : 120 }}>
                 {displayTopics.map((topic, topicIndex) => (
-                  <span key={topicIndex} className="text-sm px-4 py-2 rounded-full font-medium bg-linear-to-br from-blue-100 to-indigo-100 text-blue-800 dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-300 border border-blue-200/50 dark:border-blue-700/30 transition-all duration-300 hover:scale-105 hover:shadow-md cursor-default"> {topic}</span>
+                  <span key={topicIndex} className="text-sm px-4 py-2 rounded-full font-medium bg-linear-to-br from-blue-100 to-indigo-100 text-blue-800 dark:from-blue-900/40 dark:to-indigo-900/40 dark:text-blue-300 border border-blue-200/50 dark:border-blue-700/30 transition-all duration-300 hover:scale-105 hover:shadow-md cursor-default"> {topic.name}</span>
                 ))}
               </div>
               {!isOpen && course.topics.length > 15 && (

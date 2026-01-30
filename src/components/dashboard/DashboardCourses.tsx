@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from 'react'
 import { ChevronDown, ChevronUp, Sparkles, BookOpen, Layers } from 'lucide-react'
-import { course, paper } from '@/lib/types'
+import { Subject, PaperPopulated } from '@/lib/types'
 import gsap from 'gsap'
 
 interface HomeProps {
-  syllabus: course[] | null
-  papers: paper[] | null
+  syllabus: Subject[] | null
+  papers: PaperPopulated[] | null
   expanded: Record<string, boolean>
   onToggle: (courseName: string) => void
   onCardHover: (index: number, isEntering: boolean) => void
@@ -125,16 +125,16 @@ const DashboardCourses = ({ syllabus, papers, expanded, onToggle, onCardHover, c
       {/* Course Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto">
         {syllabus?.map((course, index) => {
-          const isOpen = expanded[course.name]
+          const isOpen = expanded[course._id]
           const displayTopics = isOpen ? course.topics : course.topics.slice(0, 15)
 
           return (
             <div
-              key={course.name}
+              key={course._id}
               ref={(el) => {
                 cardsRef.current[index] = el
               }}
-              data-course-name={course.name}
+              data-course-id={course._id}
               onMouseEnter={() => onCardHover(index, true)}
               onMouseLeave={() => onCardHover(index, false)}
               className="group rounded-3xl bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xl p-6 border border-slate-200/50 dark:border-neutral-700/50 shadow-lg shadow-slate-200/20 dark:shadow-neutral-900/20 flex flex-col transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-300/30 dark:hover:shadow-neutral-800/30"
@@ -152,7 +152,7 @@ const DashboardCourses = ({ syllabus, papers, expanded, onToggle, onCardHover, c
                 </div>
 
                 <button
-                  onClick={() => onToggle(course.name)}
+                  onClick={() => onToggle(course._id)}
                   className="shrink-0 w-10 h-10 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-180"
                 >
                   {isOpen ? (
@@ -180,7 +180,7 @@ const DashboardCourses = ({ syllabus, papers, expanded, onToggle, onCardHover, c
                       border border-blue-200/50 dark:border-blue-700/30
                       transition-all duration-300 hover:scale-105 hover:shadow-md cursor-default"
                   >
-                    {topic}
+                    {topic.name}
                   </span>
                 ))}
               </div>

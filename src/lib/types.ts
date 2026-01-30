@@ -53,12 +53,17 @@ export interface Department {
   name: string
 }
 
-export interface StudentPopulated extends Omit<Student, 'departmentId' | 'currentSubjects'> {
+export interface StudentPopulated extends Omit<Student, 'departmentId' | 'currentSubjects' | 'uploadedPapers'> {
   departmentId: Department
   currentSubjects: Subject[]
+  uploadedPapers: PaperPopulated[]
 }
 
 export interface PaperPopulated extends Omit<Paper, 'subjectId' | 'uploadedBy'> {
-  subjectId: Subject
+  subjectId: SubjectPopulated
   uploadedBy: Student
+}
+
+export interface SubjectPopulated extends Omit<Subject, 'departmentId'> {
+  department: Department
 }

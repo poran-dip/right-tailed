@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from '@/lib/db';
-import { Student, Subject, Paper } from '@/models';
+import { Student } from '@/models';
 
 export async function GET(req: NextRequest) {
   try {
@@ -16,8 +16,17 @@ export async function GET(req: NextRequest) {
     await dbConnect();
 
     const student = await Student.findById(studentId)
-      .populate('subjectIds')
-      .populate('paperIds')
+      .populate('departmentId')
+      .populate('currentSubjects')
+      .populate({
+        path: 'uploadedPapers',
+        populate: { path: 'subjectId' }
+      })
+      .populate({
+        path: 'savedPapers',
+        populate: { path: 'subjectId' }
+      })
+      .select('-passwordHash') // Exclude passwordHash from response
       .lean();
 
     if (!student) {
@@ -27,12 +36,10 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const { password, ...studentData } = student;
-
     return NextResponse.json(
       { 
         success: true,
-        student: studentData
+        student
       },
       { status: 200 }
     );
@@ -58,7 +65,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, email, semester, program, subjectIds, paperIds, exams } = body;
+    const { name, email, semester, departmentId, currentSubjects, savedPapers, upcomingExams } = body;
 
     await dbConnect();
 
@@ -80,18 +87,29 @@ export async function PUT(req: NextRequest) {
     if (name !== undefined) updateData.name = name;
     if (email !== undefined) updateData.email = email.toLowerCase();
     if (semester !== undefined) updateData.semester = semester;
-    if (program !== undefined) updateData.program = program;
-    if (subjectIds !== undefined) updateData.subjectIds = subjectIds;
-    if (paperIds !== undefined) updateData.paperIds = paperIds;
-    if (exams !== undefined) updateData.exams = exams;
+    if (departmentId !== undefined) updateData.departmentId = departmentId;
+    if (currentSubjects !== undefined) updateData.currentSubjects = currentSubjects;
+    if (savedPapers !== undefined) updateData.savedPapers = savedPapers;
+    if (upcomingExams !== undefined) updateData.upcomingExams = upcomingExams;
 
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
       updateData,
       { new: true, runValidators: true }
     )
-      .populate('subjectIds')
-      .populate('paperIds')
+      .populate('departmentId')
+      .populate('currentSubjects')
+      .populate({
+        path: 'uploadedPapers',
+        populate: {
+          path: 'subjectId',
+        }
+      })
+      .populate({
+        path: 'savedPapers',
+        populate: { path: 'subjectId' }
+      })
+      .select('-passwordHash')
       .lean();
 
     if (!updatedStudent) {
@@ -101,12 +119,10 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const { password, ...studentData } = updatedStudent;
-
     return NextResponse.json(
       { 
         success: true,
-        student: studentData,
+        student: updatedStudent,
         message: "Profile updated successfully"
       },
       { status: 200 }

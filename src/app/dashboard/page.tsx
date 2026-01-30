@@ -4,7 +4,7 @@ import { useStudentData } from './layout'
 import DashboardHome from '@/components/dashboard/DashboardHome'
 
 const DashboardPage = () => {
-  const { syllabus, papers, student, isLoading } = useStudentData()
+  const { student, isLoading } = useStudentData()
 
   if (isLoading) {
     return (
@@ -22,7 +22,11 @@ const DashboardPage = () => {
       </div>
 
       <div className="relative">
-        <DashboardHome syllabus={syllabus} papers={papers} student={student} />
+        <DashboardHome 
+          syllabus={student?.currentSubjects || null} 
+          papers={student?.uploadedPapers || null} 
+          student={student} 
+        />
       </div>
     </div>
   )

@@ -169,6 +169,54 @@ export const syllabus = {
   ]
 }
 
+export const syllabus2 = {
+  name: "Object Oriented Programming",
+  topics: [
+    {
+      name: "OOP Basics",
+      keywords: [
+        "object", "class", "method", "attribute", "encapsulation",
+        "abstraction", "modifiers", "constructor", "destructor"
+      ]
+    },
+    {
+      name: "Inheritance & Polymorphism",
+      keywords: [
+        "inheritance", "superclass", "subclass", "overriding",
+        "overloading", "polymorphism", "dynamic binding"
+      ]
+    },
+    {
+      name: "Interfaces & Abstract Classes",
+      keywords: [
+        "interface", "abstract class", "implementation", "contract",
+        "multiple inheritance", "pure virtual"
+      ]
+    },
+    {
+      name: "Exception Handling & File I/O",
+      keywords: [
+        "try", "catch", "finally", "throw", "exception", "file read",
+        "file write", "serialization", "deserialization"
+      ]
+    },
+    {
+      name: "Collections & Generics",
+      keywords: [
+        "array", "list", "map", "set", "queue", "stack",
+        "generic", "template", "iterator"
+      ]
+    },
+    {
+      name: "Design Principles & Patterns",
+      keywords: [
+        "SOLID", "DRY", "OCP", "factory pattern", "singleton",
+        "observer", "strategy", "MVC"
+      ]
+    }
+  ]
+}
+
 export const questionPaper2025 = {
   "subject": "Computer Networks",
   "year": 2025,

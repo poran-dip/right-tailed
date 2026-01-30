@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
-import Student from '@/models/Student';
+import { Student } from '@/models';
 
 export async function POST(req: Request) {
   try {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     await dbConnect();
 
-    const student = await Student.findOne({ email: email.toLowerCase() }).select('+password');
+    const student = await Student.findOne({ email: email.toLowerCase() }).select('+passwordHash');
     
     if (!student) {
       return NextResponse.json(
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const isValidPassword = await bcrypt.compare(password, student.password);
+    const isValidPassword = await bcrypt.compare(password, student.passwordHash);
     
     if (!isValidPassword) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
         name: student.name,
         email: student.email,
         semester: student.semester,
-        program: student.program,
+        departmentId: student.departmentId,
       }
     });
 

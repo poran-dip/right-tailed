@@ -6,7 +6,7 @@ import AchievementsPage from '@/components/dashboard/Achievements'
 const Achievements = () => {
   const { student } = useStudentData()
 
-  return <AchievementsPage student={student} />
+  return <AchievementsPage />
 }
 
 export default Achievements

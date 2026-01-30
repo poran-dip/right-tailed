@@ -6,19 +6,23 @@ import DashboardCourses from '@/components/dashboard/DashboardCourses'
 import { useStudentData } from '../layout'
 
 const DashboardCoursesPage = () => {
-  const { syllabus, papers, isLoading } = useStudentData()
+  const { student, isLoading } = useStudentData()
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
-  const toggle = (courseName: string) => {
+  // Extract syllabus and papers from student
+  const syllabus = student?.currentSubjects || null
+  const papers = student?.uploadedPapers || null
+
+  const toggle = (courseId: string) => {  // Changed from courseName to courseId
     const cardElement = cardsRef.current.find(
-      (el) => el?.dataset.courseName === courseName
+      (el) => el?.dataset.courseId === courseId  // Changed from courseName to courseId
     )
 
     if (cardElement) {
       const topicsContainer = cardElement.querySelector('.topics-container')
 
-      if (expanded[courseName]) {
+      if (expanded[courseId]) {  // Changed from courseName to courseId
         gsap.to(topicsContainer, {
           maxHeight: 120,
           duration: 0.5,
@@ -35,7 +39,7 @@ const DashboardCoursesPage = () => {
 
     setExpanded((prev) => ({
       ...prev,
-      [courseName]: !prev[courseName],
+      [courseId]: !prev[courseId],  // Changed from courseName to courseId
     }))
   }
 
