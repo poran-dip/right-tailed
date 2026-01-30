@@ -1,4 +1,4 @@
-import { ITopic, IQuestion, IExam, IStudent, ISubject, IPaper, IDepartment } from '@/lib/types'
+import { ITopic, IQuestion, IExam, IStudent, ISubject, IPaper, IDepartment } from '@/lib/db.types'
 import mongoose, { Schema, Model, models } from 'mongoose'
 
 const TopicSchema = new Schema<ITopic>({
@@ -23,7 +23,7 @@ const StudentSchema = new Schema<IStudent>(
     email: { type: String, required: true, unique: true },
     passwordHash: { type: String, required: true },
     departmentId: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
-    semester: { type: Number, required: true },
+    semester: { type: Number, required: true, min: 1, max: 8 },
     currentSubjects: [{ type: Schema.Types.ObjectId, ref: 'Subject', default: [] }],
     uploadedPapers: [{ type: Schema.Types.ObjectId, ref: 'Paper', default: [] }],
     savedPapers: [{ type: Schema.Types.ObjectId, ref: 'Paper', default: [] }],
@@ -35,7 +35,6 @@ const StudentSchema = new Schema<IStudent>(
 const SubjectSchema = new Schema<ISubject>({
   name: { type: String, required: true },
   departmentId: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
-  semester: { type: Number, required: true, min: 1, max: 8 },
   topics: { type: [TopicSchema], default: [] }
 })
 

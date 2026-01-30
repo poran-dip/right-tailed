@@ -1,52 +1,64 @@
-import mongoose, { ObjectId } from "mongoose"
-
-export interface IStudent extends mongoose.Document {
+export interface Student {
+  _id: string
   name: string
   email: string
-  passwordHash: string
-  departmentId: ObjectId
+  departmentId: string
   semester: number
-  currentSubjects: ObjectId[]
-  uploadedPapers: ObjectId[]
-  savedPapers: ObjectId[]
-  upcomingExams: IExam[]
-  createdAt: Date
+  currentSubjects: string[]
+  uploadedPapers: string[]
+  savedPapers: string[]
+  upcomingExams: Exam[]
+  createdAt: string
+  updatedAt: string
 }
 
-export interface ISubject extends mongoose.Document {
+export interface Subject {
+  _id: string
   name: string
-  departmentId: ObjectId
-  semester: number
-  topics: ITopic[]
+  departmentId: string
+  topics: Topic[]
 }
 
-export interface ITopic {
-  _id?: ObjectId
+export interface Topic {
+  _id?: string
   name: string
   keywords: string[]
 }
 
-export interface IPaper extends mongoose.Document {
-  subjectId: ObjectId
+export interface Paper {
+  _id: string
+  subjectId: string
   year: number
-  questions: IQuestion[]
-  uploadedBy: ObjectId
-  createdAt: Date
+  questions: Question[]
+  uploadedBy: string
+  createdAt: string
+  updatedAt: string
 }
 
-export interface IQuestion {
-  _id?: ObjectId
+export interface Question {
+  _id?: string
   text: string
   marks: number
-  topicId: ObjectId
+  topicId: string
 }
 
-export interface IExam {
-  subjectId: ObjectId
-  dateTime: Date
+export interface Exam {
+  subjectId: string
+  dateTime: string
 }
 
-export interface IDepartment extends mongoose.Document {
+export interface Department {
+  _id: string
   code: string
   name: string
+}
+
+export interface StudentPopulated extends Omit<Student, 'departmentId' | 'currentSubjects'> {
+  departmentId: Department
+  currentSubjects: Subject[]
+}
+
+export interface PaperPopulated extends Omit<Paper, 'subjectId' | 'uploadedBy'> {
+  subjectId: Subject
+  uploadedBy: Student
 }
