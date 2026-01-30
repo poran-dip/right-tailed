@@ -168,7 +168,7 @@ const Sidebar = () => {
       )}
 
       {showLogoutModal && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+        <div className="fixed inset-0 z-60 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowLogoutModal(false)} />
 
           <div className="relative z-10 w-full max-w-sm mx-4 rounded-2xl bg-white dark:bg-neutral-900 p-6 shadow-xl">
