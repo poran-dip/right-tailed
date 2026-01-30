@@ -17,7 +17,6 @@ export default function PYQDetailPage() {
 
   const expectedYear = String(questionPaper2025.year);
 
-  // Debug safety net (remove later)
   if (!subject || !year) {
     return <div className="p-10">Params missing</div>;
   }
@@ -34,10 +33,7 @@ export default function PYQDetailPage() {
 
       <div className="space-y-4">
         {questionPaper2025.questions.map((q, i) => (
-          <div
-            key={i}
-            className="p-4 border rounded-lg bg-white dark:bg-slate-900"
-          >
+          <div key={i} className="p-4 border rounded-lg bg-white dark:bg-slate-900">
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Q{i + 1}</span>
               <span className="text-sm text-gray-500">

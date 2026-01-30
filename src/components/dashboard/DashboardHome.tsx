@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { 
-  Sparkles, 
-  BookOpen, 
-  Layers, 
-  TrendingUp, 
-  Upload, 
+import {
+  Sparkles,
+  BookOpen,
+  Layers,
+  TrendingUp,
+  Upload,
   Play,
   FileText,
   Calendar,
@@ -83,7 +83,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
 
   const getNextExam = () => {
     if (!student?.exams || student.exams.length === 0) return null
-    
+
     const now = new Date()
     const upcomingExams = student.exams
       .map(exam => ({
@@ -92,7 +92,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       }))
       .filter(exam => exam.dateTime > now)
       .sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime())
-    
+
     return upcomingExams[0] || null
   }
 
@@ -101,10 +101,10 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
   const getTimeUntilExam = (examDate: Date) => {
     const now = new Date()
     const diff = examDate.getTime() - now.getTime()
-    
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24))
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    
+
     if (days > 0) return `${days} day${days > 1 ? 's' : ''}`
     if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''}`
     return 'Soon'
@@ -157,12 +157,12 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
           y: 20,
         });
 
-      gsap.to(actionsRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
-      });
+        gsap.to(actionsRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+        });
       }
     })
 
@@ -189,7 +189,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       {/* Upcoming Exam Alert */}
       {nextExam && (
         <div className="mb-8 max-w-7xl mx-auto">
-          <div className="relative overflow-hidden bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 rounded-2xl p-6 shadow-xl shadow-purple-500/25">
+          <div className="relative overflow-hidden bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 rounded-2xl p-6 shadow-xl shadow-purple-500/30">
             {/* Animated background effect */}
             <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent"></div>
 
@@ -221,7 +221,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
                   </p>
                 </div>
               </div>
-              
+
               <button
                 onClick={() => router.push(`/dashboard/courses/${encodeURIComponent(nextExam.course)}`)}
                 className="group w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-purple-700 font-semibold hover:bg-white/90 transition-all duration-300 cursor-pointer hover:scale-[1.02] flex items-center gap-2 shadow-lg"
@@ -231,7 +231,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
                 <span className="transform group-hover:translate-x-1 transition-transform">→</span>
               </button>
             </div>
-            
+
             {/* Pulse effect */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
           </div>
@@ -301,38 +301,43 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
       </div>
 
       {/* Quick Actions */}
-      <div ref={actionsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-7xl mx-auto">
-        <button
-          onClick={() => router.push('/dashboard/upload')}
-          className="group relative overflow-hidden bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-2xl p-3 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/25 hover:-translate-y-1"
-        >
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+      <div ref={actionsRef} className="flex justify-between gap-4 mb-10 max-w-7xl mx-auto">
+        <div className="w-[50%] flex flex-col transition-all duration-300 relative overflow-hidden border border-purple-600/20 hover:bg-purple-50 text-black rounded-2xl p-3 sm:p-6">
+          <div className=" flex items-center gap-4">
+            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl bg-purple-500 text-white backdrop-blur-sm flex items-center justify-center shrink-0">
               <Upload className="w-5 sm:w-7 h-5 sm:h-7" />
             </div>
             <div className="text-left">
               <h3 className="text-base sm:text-xl font-bold mb-1">Upload PYQ</h3>
-              <p className="text-blue-100 text-sm">Add past year questions to expand the database</p>
+              <p className="text-black/70 text-sm">Add past year questions to expand the database</p>
             </div>
           </div>
-          <div className="absolute inset-0 bg-linear-to-br from-white/0 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
+          <button onClick={() => router.push('/dashboard/upload')} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
+            Upload PYQs
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1.5">
+              →
+            </span>
+          </button>
+        </div>
 
-        <button
-          onClick={() => router.push('/dashboard/mock-test')}
-          className="group relative overflow-hidden bg-linear-to-br from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-2xl p-3 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/25 hover:-translate-y-1"
-        >
+        <div className="w-[50%] flex flex-col relative overflow-hidden transition-all duration-300 hover:bg-purple-50 border border-purple-600/20 text-black rounded-2xl p-3 sm:p-6">
           <div className="relative z-10 flex items-center gap-4">
-            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+            <div className="w-10 sm:w-14 h-10 sm:h-14 rounded-xl bg-purple-500 text-white backdrop-blur-sm flex items-center justify-center shrink-0">
               <Play className="w-5 sm:w-7 h-5 sm:h-7" />
             </div>
             <div className="text-left">
               <h3 className="text-base sm:text-xl font-bold mb-1">Take Mock Test</h3>
-              <p className="text-emerald-100 text-sm">Practice with AI-generated questions</p>
+              <p className="text-black/80 text-sm">Practice with AI-generated questions</p>
             </div>
           </div>
-          <div className="absolute inset-0 bg-linear-to-br from-white/0 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
+          <button onClick={() => router.push('/dashboard/mock-test')} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
+            Take mock tests
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1.5">
+              →
+            </span>
+          </button>
+
+        </div>
       </div>
 
       {/* Current Semester Courses */}

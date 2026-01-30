@@ -62,7 +62,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="min-h-screen flex bg-white dark:bg-slate-950">
           <Sidebar />
 
-          <main className="flex-1 overflow-x-hidden lg:ml-64">
+          <main className="flex-1 overflow-x-hidden lg:ml-58">
             <MobileNavbar />
 
             <div className="mt-12 lg:mt-0" /> {/* Spacer */}

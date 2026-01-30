@@ -134,13 +134,7 @@ function PYQContent() {
                 <div className='w-full mt-3'>
                   <button className='w-full text-right cursor-pointer'
                     onClick={() =>
-                      router.push(
-                        `/dashboard/pyqs/${p.subject
-                          .toLowerCase()
-                          .trim()
-                          .replace(/\s+/g, '-')}/${p.year}`
-                      )
-                    }>
+                      router.push(`/dashboard/pyqs/${p.subject.toLowerCase().trim().replace(/\s+/g, '-')}/${p.year}`)}>
                     View paper →
                   </button>
                 </div>
