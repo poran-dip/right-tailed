@@ -30,7 +30,7 @@ const WorkflowSection = ({ onPrimaryCTA }: WorkflowSectionProps) => {
   ]
 
   return (
-    <section id="process" className="bg-purple-600 dark:bg-slate-900 py-15 px-6">
+    <section id="process" className="scroll-mt-16 bg-purple-600 dark:bg-slate-900 py-15 px-6">
       <div className="max-w-5xl mx-auto text-center mb-20">
         <h2 className="text-4xl font-bold text-white mb-4">
           How RightTailed Works

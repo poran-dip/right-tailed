@@ -31,19 +31,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [syllabusRes, papersRes, userRes] = await Promise.all([
-          fetch('/api/user/syllabus'),
-          fetch('/api/user/papers'),
-          fetch('/api/user')
-        ])
-
-        const syllabusData = await syllabusRes.json()
-        const papersData = await papersRes.json()
+        const studentId = localStorage.getItem('studentId')
+        
+        if (!studentId) {
+          console.error('No student ID found in localStorage')
+          setIsLoading(false)
+          return
+        }
+        
+        const userRes = await fetch(`/api/user?id=${studentId}`)
         const userData = await userRes.json()
 
-        setSyllabus(syllabusData.course)
-        setPapers(papersData.papers)
-        setStudent(userData.student)
+        if (userData.success && userData.student) {
+          setStudent(userData.student)
+          
+          // subjectIds and paperIds are already populated from your API
+          setSyllabus(userData.student.subjectIds as course[])
+          setPapers(userData.student.paperIds as paper[])
+        }
       } catch (error) {
         console.error('Failed to fetch student data:', error)
       } finally {

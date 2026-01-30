@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -10,9 +11,15 @@ interface NavbarProps {
 }
 
 const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
   const scrollYRef = useRef(0)
+
+  useEffect(() => {
+    setSignedIn(!!localStorage.getItem('studentId'))
+  }, [])
 
   useEffect(() => {
     if (menuOpen) {
@@ -42,6 +49,16 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
     }, 300)
   }
 
+  const scrollToSection = (sectionId: string) => {
+    closeMenu()
+    setTimeout(() => {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 350)
+  }
+
   return (
     <header>
       <nav className="fixed top-0 w-full bg-white/70 dark:bg-slate-900/80 backdrop-blur-xs border-b border-slate-200 dark:border-white/20 z-50 shadow-md">
@@ -53,21 +70,33 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
             <Menu className="w-6 h-6" strokeWidth={3} />
           </button>
 
-          <span className="text-md font-bold text-purple-600">RightTailed</span>
+          <a href="/#" className="text-md font-bold text-purple-600">RightTailed</a>
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="font-semibold hover:text-purple-600">Features</a>
-            <a href="#process" className="font-semibold hover:text-purple-600">How It Works</a>
-            <a href="#benefits" className="font-semibold hover:text-purple-600">Benefits</a>
+            <a href="/#features" className="font-semibold hover:text-purple-600">Features</a>
+            <a href="/#process" className="font-semibold hover:text-purple-600">How It Works</a>
+            <a href="/#benefits" className="font-semibold hover:text-purple-600">Benefits</a>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={() => setShowSignInDialog(true)}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold"
-            >
-              Sign In
-            </button>
+            {signedIn &&
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold cursor-pointer"
+              >
+                Open App
+              </button>
+            }
+
+            {!signedIn &&
+              <button
+                onClick={() => setShowSignInDialog(true)}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold cursor-pointer"
+              >
+                Sign In
+              </button>
+            }
+            
             <ThemeToggle />
           </div>
         </div>
@@ -107,21 +136,47 @@ const Navbar = ({ setShowSignInDialog }: NavbarProps) => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-1">
-              <a href="#features" onClick={closeMenu} className="block px-4 py-3 font-semibold">Features</a>
-              <a href="#process" onClick={closeMenu} className="block px-4 py-3 font-semibold">How It Works</a>
-              <a href="#benefits" onClick={closeMenu} className="block px-4 py-3 font-semibold">Benefits</a>
+                <button 
+                  onClick={() => scrollToSection('features')} 
+                  className="block w-full text-left px-4 py-3 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                >
+                  Features
+                </button>
+                <button 
+                  onClick={() => scrollToSection('process')} 
+                  className="block w-full text-left px-4 py-3 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                >
+                  How It Works
+                </button>
+                <button 
+                  onClick={() => scrollToSection('benefits')} 
+                  className="block w-full text-left px-4 py-3 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                >
+                  Benefits
+                </button>
             </div>
 
             <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-4">
-              <button
-                onClick={() => {
-                  setShowSignInDialog(true)
-                  closeMenu()
-                }}
-                className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold"
-              >
-                Sign In
-              </button>
+              {signedIn &&
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold cursor-pointer"
+                >
+                  Open App
+                </button>
+              }
+
+              {!signedIn &&
+                <button
+                  onClick={() => {
+                    setShowSignInDialog(true)
+                    closeMenu()
+                  }}
+                  className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold cursor-pointer"
+                >
+                  Sign In
+                </button>
+              }
 
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Theme</span>

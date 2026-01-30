@@ -65,7 +65,7 @@ const FeaturesSection = ({ onPrimaryCTA }: FeaturesSectionProps) => {
   return (
     <section
       id="features"
-      className="py-20 px-6 bg-white dark:bg-slate-950"
+      className="scroll-mt-16 py-20 px-6 bg-white dark:bg-slate-950"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">

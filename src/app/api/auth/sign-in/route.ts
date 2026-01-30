@@ -1,16 +1,55 @@
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
+import dbConnect from '@/lib/db';
+import Student from '@/models/Student';
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
+  try {
+    const { email, password } = await req.json();
 
-  if (!email || !password) {
+    if (!email || !password) {
+      return NextResponse.json(
+        { success: false, error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    await dbConnect();
+
+    const student = await Student.findOne({ email: email.toLowerCase() }).select('+password');
+    
+    if (!student) {
+      return NextResponse.json(
+        { success: false, error: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    const isValidPassword = await bcrypt.compare(password, student.password);
+    
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { success: false, error: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.json({ 
+      success: true,
+      student: {
+        id: student._id,
+        name: student.name,
+        email: student.email,
+        semester: student.semester,
+        program: student.program,
+      }
+    });
+
+  } catch (error) {
+    console.error('Sign-in error:', error);
     return NextResponse.json(
-      { success: false, error: "All fields are required" },
-      { status: 400 }
+      { success: false, error: "Server error" },
+      { status: 500 }
     );
   }
-
-  console.log(email, password);
-
-  return NextResponse.json({ success: true });
 }
