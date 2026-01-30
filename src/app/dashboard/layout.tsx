@@ -5,6 +5,7 @@ import Sidebar from '@/components/dashboard/Sidebar'
 import MobileNavbar from '@/components/dashboard/MobileNavbar'
 import { DashboardProvider } from '@/contexts/DashboardContext'
 import { course, paper, student } from '@/lib/types'
+import { useAuthGuard } from '@/hooks/useAuthGuard'
 
 interface StudentData {
   syllabus: course[] | null
@@ -23,6 +24,9 @@ const StudentDataContext = createContext<StudentData>({
 export const useStudentData = () => useContext(StudentDataContext)
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+
+  useAuthGuard();
+
   const [syllabus, setSyllabus] = useState<course[] | null>(null)
   const [papers, setPapers] = useState<paper[] | null>(null)
   const [student, setStudent] = useState<student | null>(null)
