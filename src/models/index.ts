@@ -23,6 +23,8 @@ const StudentSchema = new Schema<IStudent>(
     email: { type: String, required: true, unique: true },
     passwordHash: { type: String, required: true },
     departmentId: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
+    semester: { type: Number, required: true },
+    currentSubjects: [{ type: Schema.Types.ObjectId, ref: 'Subject', default: [] }],
     uploadedPapers: [{ type: Schema.Types.ObjectId, ref: 'Paper', default: [] }],
     savedPapers: [{ type: Schema.Types.ObjectId, ref: 'Paper', default: [] }],
     upcomingExams: { type: [ExamSchema], default: [] }
@@ -49,8 +51,7 @@ const PaperSchema = new Schema<IPaper>(
 
 const DepartmentSchema = new Schema<IDepartment>({
   code: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  subjects: [{ type: Schema.Types.ObjectId, ref: 'Subject', default: [] }]
+  name: { type: String, required: true }
 })
 
 StudentSchema.index({ departmentId: 1 })

@@ -5,6 +5,8 @@ export interface IStudent extends mongoose.Document {
   email: string
   passwordHash: string
   departmentId: ObjectId
+  semester: number
+  currentSubjects: ObjectId[]
   uploadedPapers: ObjectId[]
   savedPapers: ObjectId[]
   upcomingExams: IExam[]
@@ -47,5 +49,4 @@ export interface IExam {
 export interface IDepartment extends mongoose.Document {
   code: string
   name: string
-  subjects: ObjectId[]
 }
