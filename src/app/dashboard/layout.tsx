@@ -4,19 +4,14 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import Sidebar from '@/components/dashboard/Sidebar'
 import MobileNavbar from '@/components/dashboard/MobileNavbar'
 import { DashboardProvider } from '@/contexts/DashboardContext'
-import { course, paper, student } from '@/lib/types'
-import { useAuthGuard } from '@/hooks/useAuthGuard'
+import { StudentPopulated } from '@/lib/types'
 
 interface StudentData {
-  syllabus: course[] | null
-  papers: paper[] | null
-  student: student | null
+  student: StudentPopulated | null
   isLoading: boolean
 }
 
 const StudentDataContext = createContext<StudentData>({
-  syllabus: null,
-  papers: null,
   student: null,
   isLoading: true,
 })
@@ -24,10 +19,7 @@ const StudentDataContext = createContext<StudentData>({
 export const useStudentData = () => useContext(StudentDataContext)
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-
-  const [syllabus, setSyllabus] = useState<course[] | null>(null)
-  const [papers, setPapers] = useState<paper[] | null>(null)
-  const [student, setStudent] = useState<student | null>(null)
+  const [student, setStudent] = useState<StudentPopulated | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -46,10 +38,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         if (userData.success && userData.student) {
           setStudent(userData.student)
-          
-          // subjectIds and paperIds are already populated from your API
-          setSyllabus(userData.student.subjectIds as course[])
-          setPapers(userData.student.paperIds as paper[])
         }
       } catch (error) {
         console.error('Failed to fetch student data:', error)
@@ -64,7 +52,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <DashboardProvider>
       <StudentDataContext.Provider
-        value={{ syllabus, papers, student, isLoading }}
+        value={{ student, isLoading }}
       >
         <div className="min-h-screen flex bg-white dark:bg-slate-950">
           <Sidebar />

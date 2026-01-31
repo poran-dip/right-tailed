@@ -1,56 +1,83 @@
 'use client'
 
-import { Suspense, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Search } from 'lucide-react'
-import { pyqs } from '@/lib/pyqs'
+import { useStudentData } from '@/app/dashboard/layout'
 import { useRouter } from 'next/navigation';
+import { PaperPopulated } from '@/lib/types'
 
 function PYQContent() {
+  const [papers, setPapers] = useState<PaperPopulated[]>([])
+  const [loading, setLoading] = useState(true)
+
   const searchParams = useSearchParams()
 
   const router = useRouter();
 
+  const { student, isLoading } = useStudentData()
+
+  if (isLoading) {
+    return <div className="p-10 text-center text-slate-500">Loading PYQs…</div>
+  }
+
+  if (!student) {
+    return <div className="p-10 text-center text-red-500">No student data</div>
+  }
+
+  useEffect(() => {
+    const fetchPapers = async () => {
+      try {
+        setLoading(true)
+        const res = await fetch('/api/papers')
+        const data = await res.json()
+        if (data.success) {
+          setPapers(data.papers)
+        } else {
+          console.error(data.error)
+        }
+      } catch (err) {
+        console.error('Failed to fetch papers', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPapers()
+  }, [])
+
   // URL params (optional, fallback only)
   const initialDept = searchParams.get('department') || 'all'
-  const initialType = searchParams.get('type')
 
   const [search, setSearch] = useState('')
   const [department, setDepartment] = useState(initialDept)
   const [subject, setSubject] = useState('all')
 
   // All departments
-  const departments = useMemo(() => {
-    return Array.from(new Set(pyqs.map(p => p.departmentId)))
-  }, [])
+  const departments = [student.departmentId.name]
 
   // Subjects based on department
   const subjects = useMemo(() => {
-    return Array.from(
-      new Set(
-        pyqs
-          .filter(p => department === 'all' || p.departmentId === department)
-          .map(p => p.subject)
-      )
-    )
-  }, [department])
+    return student.currentSubjects.map(s => s.name)
+  }, [student])
 
   // Final filtered list
   const filteredPYQs = useMemo(() => {
-    return pyqs
+    return papers
       .filter(p =>
-        initialType ? p.examType === initialType : true
+        department === 'all'
+          ? true
+          : p.subjectId.department._id === department
       )
       .filter(p =>
-        department === 'all' ? true : p.departmentId === department
+        subject === 'all'
+          ? true
+          : p.subjectId.name === subject
       )
       .filter(p =>
-        subject === 'all' ? true : p.subject === subject
+        p?.subjectId?.name.toLowerCase().includes(search.toLowerCase())
       )
-      .filter(p =>
-        p.subject.toLowerCase().includes(search.toLowerCase())
-      )
-  }, [initialType, department, subject, search])
+  }, [papers, department, subject, search])
 
   return (
     <div className="px-6 py-10">
@@ -85,7 +112,9 @@ function PYQContent() {
             }}
             className="text-center px-5 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
           >
-            <option value="all">All departments</option>
+            <option value={student.departmentId._id}>
+              {student.departmentId.name}
+            </option>
             {departments.map(d => (
               <option key={d} value={d}>{d}</option>
             ))}
@@ -112,17 +141,17 @@ function PYQContent() {
 
           {filteredPYQs.map(p => (
             <div
-              key={p.id}
+              key={p._id}
               className="rounded-2xl w-fit dark:border dark:border-slate-800 px-6 py-4 bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 text-white shadow-xl shadow-purple-500/25"
             >
               <div className="flex flex-col justify-between items-start">
                 <div className='flex justify-between items-start'>
                   <div>
                     <h3 className="text-xl font-semibold">
-                      {p.subject}
+                      {p.subjectId.name}
                     </h3>
                     <p className="text-sm text-white/70">
-                      {p.departmentId} • Year {p.year}
+                      {p.subjectId?.department?.name} • Year {p.year}
                     </p>
                   </div>
 
@@ -134,7 +163,7 @@ function PYQContent() {
                 <div className='w-full mt-3'>
                   <button className='w-full text-right cursor-pointer'
                     onClick={() =>
-                      router.push(`/dashboard/pyqs/${p.subject.toLowerCase().trim().replace(/\s+/g, '-')}/${p.year}`)}>
+                      router.push(`/dashboard/pyqs/${p.subjectId?.name.toLowerCase().trim().replace(/\s+/g, '-')}/${p.year}`)}>
                     View paper →
                   </button>
                 </div>

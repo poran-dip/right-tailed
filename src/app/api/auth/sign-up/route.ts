@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
-import { Student, Subject, Paper } from '@/models';
+import { Student } from '@/models';
 
 export async function POST(req: Request) {
   try {
@@ -36,7 +36,9 @@ export async function POST(req: Request) {
     const student = await Student.create({
       name,
       email: email.toLowerCase(),
-      password: hashedPassword,
+      passwordHash: hashedPassword,
+      departmentId: undefined,
+      semester: 1
     });
 
     return NextResponse.json({ 

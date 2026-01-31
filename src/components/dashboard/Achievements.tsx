@@ -15,12 +15,8 @@ import {
   CheckCircle,
   Flame
 } from 'lucide-react'
-import { student } from '@/lib/types'
 import gsap from 'gsap'
-
-interface AchievementsPageProps {
-  student: student | null
-}
+import { achievements } from '@/lib/data'
 
 const getAchievementIcon = (name: string) => {
   const lowerName = name.toLowerCase()
@@ -53,12 +49,11 @@ const getAchievementGradient = (index: number) => {
   return gradients[index % gradients.length]
 }
 
-const AchievementsPage = ({ student }: AchievementsPageProps) => {
+const AchievementsPage = () => {
   const headerRef = useRef<HTMLDivElement>(null)
   const statsRef = useRef<HTMLDivElement>(null)
   const achievementsRef = useRef<HTMLDivElement>(null)
 
-  const achievements = student?.achievements || []
   const unlockedCount = achievements.filter(a => a.isUnlocked).length
   const totalCount = achievements.length
   const progressPercentage = totalCount > 0 ? (unlockedCount / totalCount) * 100 : 0

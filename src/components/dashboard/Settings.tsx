@@ -2,34 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface Subject {
-  _id: string;
-  name: string;
-  topics: string[];
-}
-
-interface Paper {
-  _id: string;
-  year: number;
-  subjectId: string;
-}
-
-interface Exam {
-  subjectId: string;
-  dateTime: string;
-}
-
-interface Student {
-  _id: string;
-  name: string;
-  email: string;
-  semester?: number;
-  program?: string;
-  subjectIds: Subject[];
-  paperIds: Paper[];
-  exams: Exam[];
-}
+import { Subject, Paper, Exam, Department } from '@/lib/types';
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -54,8 +27,10 @@ export default function SettingsPage() {
     name: '',
     email: '',
     semester: '',
-    program: '',
+    departmentId: '',
   });
+
+  const [allDepartments, setAllDepartments] = useState<Department[]>([]);
 
   const [allSubjects, setAllSubjects] = useState<Subject[]>([]);
   const [allPapers, setAllPapers] = useState<Paper[]>([]);
@@ -69,6 +44,7 @@ export default function SettingsPage() {
     fetchStudentData();
     fetchAllSubjects();
     fetchAllPapers();
+    fetchAllDepartments();
   }, [studentId]);
 
   const fetchStudentData = async () => {
@@ -82,11 +58,11 @@ export default function SettingsPage() {
           name: student.name,
           email: student.email,
           semester: student.semester?.toString() || '',
-          program: student.program || '',
+          departmentId: student.departmentId?._id || student.departmentId || '',
         });
-        setSelectedSubjects(student.subjectIds.map((s: Subject) => s._id));
-        setSelectedPapers(student.paperIds.map((p: Paper) => p._id));
-        setExams(student.exams || []);
+        setSelectedSubjects(student.currentSubjects.map((s: Subject) => s._id));
+        setSelectedPapers(student.savedPapers.map((p: Paper) => p._id));
+        setExams(student.upcomingExams || []);
       } else {
         setError(data.error || 'Failed to load student data');
       }
@@ -99,7 +75,7 @@ export default function SettingsPage() {
 
   const fetchAllSubjects = async () => {
     try {
-      const res = await fetch('/api/subjects');
+      const res = await fetch('/api/subject');
       const data = await res.json();
       if (data.success) setAllSubjects(data.subjects || []);
     } catch (err) {
@@ -114,6 +90,16 @@ export default function SettingsPage() {
       if (data.success) setAllPapers(data.papers || []);
     } catch (err) {
       console.error('Failed to load papers');
+    }
+  };
+
+  const fetchAllDepartments = async () => {
+    try {
+      const res = await fetch('/api/departments');
+      const data = await res.json();
+      if (data.success) setAllDepartments(data.departments || []);
+    } catch (err) {
+      console.error('Failed to load departments');
     }
   };
 
@@ -168,10 +154,10 @@ export default function SettingsPage() {
           name: formData.name,
           email: formData.email,
           semester: formData.semester ? parseInt(formData.semester) : undefined,
-          program: formData.program,
-          subjectIds: selectedSubjects,
-          paperIds: selectedPapers,
-          exams: exams.filter(e => e.subjectId && e.dateTime),
+          departmentId: formData.departmentId,
+          currentSubjects: selectedSubjects,
+          savedPapers: selectedPapers,
+          upcomingExams: exams.filter(e => e.subjectId && e.dateTime),
         }),
       });
 
@@ -258,14 +244,20 @@ export default function SettingsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Program</label>
-                <input
-                  type="text"
-                  name="program"
-                  value={formData.program}
-                  onChange={handleInputChange}
+                <label className="block text-sm font-medium mb-1">Department</label>
+                <select
+                  name="departmentId"
+                  value={formData.departmentId}
+                  onChange={(e) => setFormData({ ...formData, departmentId: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                >
+                  <option value="">Select Department</option>
+                  {allDepartments.map(dept => (
+                    <option key={dept._id} value={dept._id}>
+                      {dept.name} ({dept.code})
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
@@ -301,7 +293,9 @@ export default function SettingsPage() {
                   onChange={() => handlePaperToggle(paper._id)}
                   className="w-4 h-4"
                 />
-                <span>Year {paper.year} - {allSubjects.find(s => s._id === paper.subjectId)?.name || 'Unknown Subject'}</span>
+                <span>
+                  {allSubjects.find(s => s._id === paper.subjectId)?.name || 'Unknown Subject'} - Year {paper.year}
+                </span>
               </label>
             ))}
           </div>

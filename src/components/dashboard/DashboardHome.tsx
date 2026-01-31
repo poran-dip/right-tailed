@@ -12,19 +12,17 @@ import {
   FileText,
   Calendar,
   Award,
-  Plane,
-  PlaneTakeoff,
   Send
 } from 'lucide-react'
-import { course, paper, student } from '@/lib/types'
+import { Subject, Paper, Student, StudentPopulated, PaperPopulated } from '@/lib/types'
 import gsap from 'gsap'
 import { useState } from 'react'
 import UploadModal from '../Upload'
 
 interface HomeProps {
-  syllabus: course[] | null
-  papers: paper[] | null
-  student: student | null
+  syllabus: Subject[] | null
+  papers: PaperPopulated[] | null
+  student: StudentPopulated | null
 }
 
 interface TopicROI {
@@ -60,14 +58,18 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
 
       // Get all questions for this course
       papers
-        .filter((paper) => paper.subject === course.name)
+        .filter((paper) => paper.subjectId?._id?.toString() === course._id?.toString())
         .forEach((paper) => {
           paper.questions.forEach((q) => {
-            if (!topicStats[q.topic]) {
-              topicStats[q.topic] = { totalMarks: 0, count: 0 }
+            // Find the topic name from the course's topics array using topicId
+            const topic = course.topics.find(t => t._id?.toString() === q.topicId.toString())
+            const topicName = topic?.name || 'Unknown'
+            
+            if (!topicStats[topicName]) {
+              topicStats[topicName] = { totalMarks: 0, count: 0 }
             }
-            topicStats[q.topic].totalMarks += q.marks
-            topicStats[q.topic].count += 1
+            topicStats[topicName].totalMarks += q.marks
+            topicStats[topicName].count += 1
           })
         })
 
@@ -91,16 +93,19 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
   const totalTopics = syllabus?.reduce((acc, course) => acc + course.topics.length, 0) || 0
 
   const getNextExam = () => {
-    if (!student?.exams || student.exams.length === 0) return null
+    if (!student?.upcomingExams || student.upcomingExams.length === 0) return null
 
     const now = new Date()
-    const upcomingExams = student.exams
-      .map(exam => ({
-        ...exam,
-        dateTime: new Date(exam.dateTime)
-      }))
-      .filter(exam => exam.dateTime > now)
-      .sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime())
+    const upcomingExams = student.upcomingExams
+      .map(exam => {
+        // Find the subject name from syllabus
+        const subject = syllabus?.find(s => s._id === exam.subjectId)
+        return {
+          ...exam,
+          dateTime: new Date(exam.dateTime),
+          course: subject?.name || 'Unknown Subject' // Add course name for display
+        }
+      })
 
     return upcomingExams[0] || null
   }
@@ -454,13 +459,17 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
               {papers.slice(0, 6).map((paper, idx) => (
                 <button
                   key={idx}
-                  onClick={() => router.push(`/dashboard/papers/${paper.subject}/${paper.year}`)}
+                  onClick={() => {
+                    // Find subject name from syllabus
+                    const subject = syllabus?.find(s => s._id === paper.subjectId?._id)
+                    router.push(`/dashboard/papers/${encodeURIComponent(subject?.name || '')}/${paper.year}`)
+                  }}
                   className="group text-left p-4 rounded-xl bg-linear-to-br from-slate-50 to-slate-100 dark:from-neutral-800 dark:to-neutral-950 border border-slate-200 dark:border-neutral-700 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-300 hover:shadow-md"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-slate-900 dark:text-slate-100 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                        {paper.subject}
+                        {syllabus?.find(s => s._id === paper.subjectId?._id)?.name || 'Unknown Subject'}
                       </h4>
                       <p className="text-sm text-slate-600 dark:text-slate-400">Year {paper.year}</p>
                     </div>
