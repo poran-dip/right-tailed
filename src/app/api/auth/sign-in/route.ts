@@ -24,6 +24,13 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
+    if (!student.passwordHash) {
+  return NextResponse.json(
+    { success: false, error: "This account does not use password login" },
+    { status: 400 }
+  );
+}
+
 
     const isValidPassword = await bcrypt.compare(password, student.passwordHash);
     
