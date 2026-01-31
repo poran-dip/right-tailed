@@ -294,7 +294,7 @@ export default function SettingsPage() {
                   className="w-4 h-4"
                 />
                 <span>
-                  {allSubjects.find(s => s._id === paper.subjectId)?.name || 'Unknown Subject'} - Year {paper.year}
+                  {allSubjects.find(s => s._id === paper.subjectId)?._id || 'Unknown Subject'} - Year {paper.year}
                 </span>
               </label>
             ))}

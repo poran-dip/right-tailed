@@ -16,6 +16,7 @@ import {
   Phone,
   LucideIcon
 } from 'lucide-react'
+import { useStudentData } from '../layout'
 
 interface FormData {
   name: string
@@ -52,12 +53,13 @@ interface Achievement {
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false)
+  const { student, isLoading } = useStudentData()
   const [formData, setFormData] = useState<FormData>({
-    name: 'Parashar deb',
-    email: 'parashardeb@email.com',
-    semester: '6',
+    name: student?.name ?? 'Error',
+    email: student?.email ?? 'Error',
+    semester: student?.semester.toString() ?? '0',
     university: 'Assam Engineering College',
-    course: 'Electronics and Telecommunication Engineering',
+    course: student?.departmentId.name ?? 'Error',
     bio: 'Ready to ace your exams!',
     phone: '+91 9707269210',
     location: 'Guwahati, Assam'
@@ -159,7 +161,7 @@ export default function Profile() {
             <div className="flex items-center gap-6">
               {/* Profile Picture */}
               <div className="relative group">
-                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
+                <div className="w-28 h-28 rounded-full bg-linear-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
                   {formData.name.charAt(0).toUpperCase()}
                 </div>
                 <button className="absolute bottom-0 right-0 bg-purple-600 p-2.5 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-purple-700 hover:scale-110 shadow-lg">
