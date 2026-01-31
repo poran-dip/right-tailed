@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { extractText, getDocumentProxy } from "unpdf";
 import { parseQuestions } from "@/lib/parse-questions";
 import { Subject } from "@/models";
@@ -36,12 +34,6 @@ export async function POST(req: Request) {
 
     // extract text
     const { text } = await extractText(pdf, { mergePages: true });
-
-    // --- write raw text to disk BEFORE parsing ---
-    const rawTextPath = path.join(process.cwd(), "extracted_raw_text.txt");
-    fs.writeFileSync(rawTextPath, text, "utf-8");
-    console.log(`Raw PDF text written to ${rawTextPath}`);
-    // ---------------------------------------------
 
     // now parse the questions
     const questions = parseQuestions(text, inferenceTopics)
