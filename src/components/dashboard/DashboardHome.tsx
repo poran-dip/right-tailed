@@ -326,7 +326,7 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
               <p className="text-black/70 dark:text-white/70 text-sm">Add past year questions to expand the database</p>
             </div>
           </div>
-          <button onClick={() => setShowUploadModal(true)} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 font-semibold px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
+          <button onClick={() => router.push('/dashboard/upload')} className="group w-1/2 ml-auto mt-5 cursor-pointer transition-all duration-300 hover:shadow-md hover:shadow-purple-500/50 bg-purple-500 font-semibold px-10 rounded-md text-white h-10 flex items-center justify-center gap-2">
             Upload PYQs
             <span className="inline-block transition-transform duration-200 group-hover:translate-x-1.5">
               →
