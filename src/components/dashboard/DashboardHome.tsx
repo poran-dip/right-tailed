@@ -14,7 +14,7 @@ import {
   Award,
   Send
 } from 'lucide-react'
-import { Subject, Paper, Student, StudentPopulated, PaperPopulated } from '@/lib/types'
+import { Subject, StudentPopulated, PaperPopulated } from '@/lib/types'
 import gsap from 'gsap'
 import { useState } from 'react'
 import UploadModal from '../Upload'
@@ -41,11 +41,6 @@ const DashboardHome = ({ syllabus, papers, student }: HomeProps) => {
   const actionsRef = useRef<HTMLDivElement>(null)
 
   const [showUploadModal, setShowUploadModal] = useState(false)
-
-
-  const uploadPDFfunction=()=>{
-    
-  }
 
   // Calculate topic ROI for each course
   const courseROIData = useMemo(() => {

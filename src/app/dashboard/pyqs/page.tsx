@@ -132,7 +132,7 @@ function PYQContent() {
           </select>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredPYQs.length === 0 && (
             <div className="text-center text-slate-500 py-20">
               No PYQs found
@@ -142,23 +142,25 @@ function PYQContent() {
           {filteredPYQs.map(p => (
             <div
               key={p._id}
-              className="rounded-2xl w-fit dark:border dark:border-slate-800 px-6 py-4 bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 text-white shadow-xl shadow-purple-500/25"
+              className="rounded-2xl w-full dark:border dark:border-slate-800 px-6 py-4 bg-linear-to-br from-purple-600 via-purple-400 to-purple-600 text-white shadow-xl shadow-purple-500/25"
             >
               <div className="flex flex-col justify-between items-start">
-                <div className='flex justify-between items-start'>
-                  <div>
+                <div className="w-full">
+                  <div className="flex justify-between items-start w-full">
                     <h3 className="text-xl font-semibold">
                       {p.subjectId.name}
                     </h3>
-                    <p className="text-sm text-white/70">
-                      {p.subjectId?.department?.name} • Year {p.year}
-                    </p>
+
+                    <span className="text-sm px-3 py-1 rounded-full bg-white text-purple-600 whitespace-nowrap">
+                      {p.questions.length} questions
+                    </span>
                   </div>
 
-                  <span className="text-sm px-3 py-1 rounded-full bg-white text-purple-600 ml-5">
-                    {p.questions.length} questions
-                  </span>
+                  <p className="text-sm text-white/70 mt-1">
+                    {p.subjectId?.department?.name} • Year {p.year}
+                  </p>
                 </div>
+
 
                 <div className='w-full mt-3'>
                   <button className='w-full text-right cursor-pointer'

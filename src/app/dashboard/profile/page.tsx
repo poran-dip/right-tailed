@@ -150,10 +150,10 @@ export default function Profile() {
   ]
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gray-50 p-6">
+    <div ref={containerRef} className="min-h-screen bg-linear-to-br from-white via-purple-50 to-purple-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
-        <div ref={headerRef} className="bg-white rounded-2xl shadow-sm p-8 mb-6 relative overflow-hidden">
+        <div ref={headerRef} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-2xl shadow-sm dark:shadow-black/30 p-8 mb-6 relative overflow-hidden border border-white/40 dark:border-slate-700">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full blur-3xl opacity-30 -mr-32 -mt-32"></div>
           
@@ -171,7 +171,7 @@ export default function Profile() {
 
               {/* User Info */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl font-bold text-purple-600 mb-2">
                   {formData.name}
                 </h1>
                 <div className="flex items-center gap-4 text-gray-600 mb-3">
@@ -217,7 +217,7 @@ export default function Profile() {
                   <div className={`${stat.color} w-14 h-14 rounded-xl flex items-center justify-center text-white mx-auto mb-3 shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
                     <Icon size={24} />
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-slate-100 mb-1">{stat.value}</div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
                 </div>
               )
@@ -232,13 +232,13 @@ export default function Profile() {
             ref={(el) => {
               cardsRef.current[0] = el
             }}
-            className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300"
+            className="bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-2xl shadow-sm dark:shadow-black/30 p-6 hover:shadow-md dark:hover:shadow-black/40 transition-all duration-300 border border-white/40 dark:border-slate-700"
           >
             <div className="flex items-center gap-2 mb-6">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <User className="text-purple-600" size={20} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Personal Information</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100">Personal Information</h2>
             </div>
 
             <div className="space-y-4">
@@ -255,7 +255,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl font-medium">{formData.name}</p>
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl font-medium">{formData.name}</p>
                 )}
               </div>
 
@@ -272,7 +272,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl flex items-center gap-2 font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl flex items-center gap-2 font-medium">
                     <Mail size={16} className="text-purple-500" />
                     {formData.email}
                   </p>
@@ -292,7 +292,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl flex items-center gap-2 font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl flex items-center gap-2 font-medium">
                     <Phone size={16} className="text-purple-500" />
                     {formData.phone}
                   </p>
@@ -312,7 +312,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl flex items-center gap-2 font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl flex items-center gap-2 font-medium">
                     <MapPin size={16} className="text-purple-500" />
                     {formData.location}
                   </p>
@@ -326,13 +326,13 @@ export default function Profile() {
             ref={(el) => {
               cardsRef.current[1] = el
             }}
-            className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300"
+            className="bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-2xl shadow-sm dark:shadow-black/30 p-6 hover:shadow-md dark:hover:shadow-black/40 transition-all duration-300 border border-white/40 dark:border-slate-700"
           >
             <div className="flex items-center gap-2 mb-6">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <GraduationCap className="text-purple-600" size={20} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Academic Information</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100">Academic Information</h2>
             </div>
 
             <div className="space-y-4">
@@ -349,7 +349,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl font-medium">
                     {formData.university}
                   </p>
                 )}
@@ -368,7 +368,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl font-medium">
                     {formData.course}
                   </p>
                 )}
@@ -387,7 +387,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl font-medium">
                     Semester {formData.semester}
                   </p>
                 )}
@@ -406,7 +406,7 @@ export default function Profile() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all resize-none"
                   />
                 ) : (
-                  <p className="text-gray-900 px-4 py-3 bg-gray-50 rounded-xl font-medium">
+                  <p className="text-gray-900 dark:text-slate-100 px-4 py-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl font-medium">
                     {formData.bio}
                   </p>
                 )}
@@ -419,24 +419,24 @@ export default function Profile() {
             ref={(el) => {
               cardsRef.current[2] = el
             }}
-            className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300"
+            className="bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-2xl shadow-sm dark:shadow-black/30 p-6 hover:shadow-md dark:hover:shadow-black/40 transition-all duration-300 border border-white/40 dark:border-slate-700"
           >
             <div className="flex items-center gap-2 mb-6">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <Calendar className="text-purple-600" size={20} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100">Recent Activity</h2>
             </div>
 
             <div className="space-y-3">
               {recentActivities.map((activity, index) => (
                 <div 
                   key={index} 
-                  className="p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition-all duration-200 cursor-pointer group"
+                  className="p-4 bg-gray-50 dark:bg-slate-700/50 rounded-xl hover:bg-purple-50 transition-all duration-200 cursor-pointer group"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                      <h3 className="font-semibold text-gray-900 dark:text-slate-100 group-hover:text-purple-600 transition-colors">
                         {activity.title}
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">{activity.time}</p>
@@ -457,13 +457,13 @@ export default function Profile() {
             ref={(el) => {
               cardsRef.current[3] = el
             }}
-            className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300"
+            className="bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-2xl shadow-sm dark:shadow-black/30 p-6 hover:shadow-md dark:hover:shadow-black/40 transition-all duration-300 border border-white/40 dark:border-slate-700"
           >
             <div className="flex items-center gap-2 mb-6">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <Trophy className="text-purple-600" size={20} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Achievements</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100">Achievements</h2>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -473,11 +473,11 @@ export default function Profile() {
                   className={`p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
                     achievement.unlocked 
                       ? 'bg-purple-50 border-purple-200 hover:border-purple-400 hover:shadow-md' 
-                      : 'bg-gray-50 border-gray-200 opacity-60 hover:opacity-80'
+                      : 'bg-gray-50 dark:bg-slate-700/50 border-gray-200 opacity-60 hover:opacity-80'
                   }`}
                 >
                   <div className="text-3xl mb-2">{achievement.icon}</div>
-                  <h3 className="font-bold text-gray-900 text-sm mb-1">{achievement.title}</h3>
+                  <h3 className="font-bold text-gray-900 dark:text-slate-100 text-sm mb-1">{achievement.title}</h3>
                   <p className="text-xs text-gray-600">{achievement.description}</p>
                 </div>
               ))}
