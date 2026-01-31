@@ -104,10 +104,7 @@ const Sidebar = () => {
               </p>
             </div>
 
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-neutral-800"
-            >
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-neutral-800">
               <X className="h-5 w-5 text-slate-600 dark:text-slate-400" />
             </button>
           </div>
