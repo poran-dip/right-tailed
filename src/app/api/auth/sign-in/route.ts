@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     await dbConnect();
 
     const student = await Student.findOne({ email: email.toLowerCase() }).select('+passwordHash');
-    
+
     if (!student) {
       return NextResponse.json(
         { success: false, error: "Invalid credentials" },
@@ -25,15 +25,14 @@ export async function POST(req: Request) {
       );
     }
     if (!student.passwordHash) {
-  return NextResponse.json(
-    { success: false, error: "This account does not use password login" },
-    { status: 400 }
-  );
-}
-
-
-    const isValidPassword = await bcrypt.compare(password, student.passwordHash);
+      return NextResponse.json(
+        { success: false, error: "This account does not use password login" },
+        { status: 400 }
+      );
+    }
     
+    const isValidPassword = await bcrypt.compare(password, student.passwordHash);
+
     if (!isValidPassword) {
       return NextResponse.json(
         { success: false, error: "Invalid credentials" },
@@ -41,7 +40,7 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       student: {
         id: student._id,
